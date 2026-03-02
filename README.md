@@ -46,6 +46,7 @@ dotconfig/
     light/
 scripts/
   install.sh
+  doctor.sh
 ```
 
 ## Quick start
@@ -64,6 +65,14 @@ scripts/
 
 Backups are stored in `~/.config-backups/dots-hyprland-YYYYMMDD-HHMMSS`.
 
+## Doctor / diagnostics
+
+Run quick checks for packages, file presence, deprecated syntax patterns, and `Hyprland --verify-config`.
+
+- Check live config (`~/.config`): `./scripts/doctor.sh --live`
+- Check repo config (`dotconfig/`): `./scripts/doctor.sh --repo`
+- Fail on missing required packages too: `./scripts/doctor.sh --repo --strict`
+
 ## Notes
 
 - Edit monitor settings in `dotconfig/hypr/conf/10-monitors.conf`.
@@ -73,6 +82,10 @@ Backups are stored in `~/.config-backups/dots-hyprland-YYYYMMDD-HHMMSS`.
 - Hyprland autostart launches `~/.config/hypr/scripts/start-shell.sh` (Quickshell first, fallback to Waybar/Mako).
 - Quickshell live data is provided by `~/.config/quickshell/end4-lite/scripts/status-daemon.sh`.
 - `SUPER+SPACE` opens a launcher action menu (apps, terminal, files, browser, screenshot, lock, power).
+- Waybar has a dedicated launcher pill (left side): left click opens end4 launcher, right click opens app launcher.
 - Theme switch:
   - `~/.config/hypr/scripts/theme-switch.sh menu`
   - `~/.config/hypr/scripts/theme-switch.sh catppuccin|dark|light`
+- Workspace binds:
+  - QWERTY: `SUPER+1..0` to switch, `SUPER+SHIFT+1..0` to move window.
+  - AZERTY top row: `SUPER+& é " ' ( - è _ ç à` (same logic as above).
