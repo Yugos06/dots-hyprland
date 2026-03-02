@@ -1,0 +1,65 @@
+{
+  "position": "top",
+  "height": 36,
+  "spacing": 8,
+  "layer": "top",
+  "margin-top": 8,
+  "margin-left": 8,
+  "margin-right": 8,
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10"
+    }
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 45,
+    "separate-outputs": true
+  },
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "tooltip-format": "<big>{:%A, %d %B %Y}</big>"
+  },
+  "pulseaudio": {
+    "format": "{volume}%",
+    "format-muted": "mute",
+    "on-click": "pavucontrol"
+  },
+  "network": {
+    "format-wifi": "{essid} {signalStrength}%",
+    "format-ethernet": "eth",
+    "format-disconnected": "offline",
+    "tooltip-format": "{ipaddr}"
+  },
+  "cpu": {
+    "format": "cpu {usage}%"
+  },
+  "memory": {
+    "format": "ram {percentage}%"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}%",
+    "format-charging": "chg {capacity}%"
+  },
+  "tray": {
+    "spacing": 8
+  }
+}
