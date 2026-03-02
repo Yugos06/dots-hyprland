@@ -6,15 +6,22 @@
   "margin-top": 8,
   "margin-left": 8,
   "margin-right": 8,
-  "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/apps-launcher", "custom/menu-launcher", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
-  "custom/launcher": {
-    "format": "",
+  "custom/apps-launcher": {
+    "format": "󰀻",
     "tooltip": true,
-    "tooltip-format": "Launcher",
+    "tooltip-format": "Applications",
+    "on-click": "~/.config/hypr/scripts/launchers.sh app",
+    "on-click-right": "~/.config/hypr/scripts/launchers.sh run"
+  },
+  "custom/menu-launcher": {
+    "format": "󱄅",
+    "tooltip": true,
+    "tooltip-format": "Actions",
     "on-click": "~/.config/quickshell/end4-lite/scripts/toggle-launcher.sh",
-    "on-click-right": "~/.config/hypr/scripts/launchers.sh app"
+    "on-click-right": "~/.config/hypr/scripts/theme-switch.sh menu"
   },
   "hyprland/workspaces": {
     "format": "{icon}",

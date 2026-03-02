@@ -7,38 +7,42 @@ if ! command -v wofi >/dev/null 2>&1; then
 fi
 
 pick="$(printf "%s\n" \
-    "Apps" \
-    "Terminal" \
-    "Fichiers" \
-    "Navigateur" \
-    "Capture ecran" \
-    "Theme menu" \
-    "Verrouiller" \
-    "Eteindre" | wofi --dmenu --prompt "Launcher")"
+    "󰆍  Terminal" \
+    "󰉋  Fichiers" \
+    "󰖟  Navigateur" \
+    "󰄄  Capture zone (copier)" \
+    "󰄀  Capture ecran (copier)" \
+    "󰄅  Capture zone (fichier)" \
+    "󰘳  Theme menu" \
+    "󰌾  Verrouiller" \
+    "󰐥  Eteindre" | wofi --dmenu --prompt "Actions" --allow-images --allow-markup)"
 
 case "${pick:-}" in
-    "Apps")
-        exec wofi --show drun
-        ;;
-    "Terminal")
+    "󰆍  Terminal")
         exec hyprctl dispatch exec kitty
         ;;
-    "Fichiers")
+    "󰉋  Fichiers")
         exec hyprctl dispatch exec thunar
         ;;
-    "Navigateur")
+    "󰖟  Navigateur")
         exec hyprctl dispatch exec firefox
         ;;
-    "Capture ecran")
-        exec hyprctl dispatch exec grimblast copy area
+    "󰄄  Capture zone (copier)")
+        exec hyprctl dispatch exec ~/.config/hypr/scripts/screenshot.sh area-copy
         ;;
-    "Theme menu")
+    "󰄀  Capture ecran (copier)")
+        exec hyprctl dispatch exec ~/.config/hypr/scripts/screenshot.sh screen-copy
+        ;;
+    "󰄅  Capture zone (fichier)")
+        exec hyprctl dispatch exec ~/.config/hypr/scripts/screenshot.sh area-save
+        ;;
+    "󰘳  Theme menu")
         exec "${HOME}/.config/hypr/scripts/theme-switch.sh" menu
         ;;
-    "Verrouiller")
+    "󰌾  Verrouiller")
         exec hyprctl dispatch exec hyprlock
         ;;
-    "Eteindre")
+    "󰐥  Eteindre")
         exec hyprctl dispatch exit
         ;;
     *)

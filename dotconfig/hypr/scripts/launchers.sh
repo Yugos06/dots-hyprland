@@ -2,10 +2,10 @@
 
 case "$1" in
     app)
-        wofi --show drun
+        exec wofi --show drun --allow-images --prompt "Applications"
         ;;
     run)
-        wofi --show run
+        exec wofi --show run --prompt "Run"
         ;;
     *)
         echo "usage: $0 {app|run}"

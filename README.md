@@ -81,8 +81,15 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
 - Quickshell profile lives in `dotconfig/quickshell/end4-lite`.
 - Hyprland autostart launches `~/.config/hypr/scripts/start-shell.sh` (Quickshell first, fallback to Waybar/Mako).
 - Quickshell live data is provided by `~/.config/quickshell/end4-lite/scripts/status-daemon.sh`.
-- `SUPER+SPACE` opens a launcher action menu (apps, terminal, files, browser, screenshot, lock, power).
-- Waybar has a dedicated launcher pill (left side): left click opens end4 launcher, right click opens app launcher.
+- `SUPER+SPACE` opens the actions launcher.
+- `SUPER+A` opens the app launcher (`wofi drun` with app icons), `SUPER+SHIFT+A` opens `wofi run`.
+- Waybar has 2 dedicated launcher pills (left side):
+  - apps launcher (left click: apps, right click: run)
+  - actions launcher (left click: actions menu, right click: theme menu)
+- Screenshots:
+  - `Print`: area to clipboard
+  - `Shift+Print`: full screen to clipboard
+  - `SUPER+Print`: area to file (`~/Pictures/Screenshots`)
 - Theme switch:
   - `~/.config/hypr/scripts/theme-switch.sh menu`
   - `~/.config/hypr/scripts/theme-switch.sh catppuccin|dark|light`
