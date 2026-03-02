@@ -12,6 +12,7 @@ window#waybar {
 }
 
 #workspaces,
+#custom-launcher,
 #window,
 #clock,
 #pulseaudio,
@@ -26,14 +27,44 @@ window#waybar {
   padding: 6px 10px;
 }
 
+#custom-launcher {
+  min-width: 34px;
+  padding-left: 12px;
+  padding-right: 12px;
+  color: #ffffff;
+  background: linear-gradient(140deg, rgba(239, 95, 132, 0.84), rgba(242, 166, 90, 0.82));
+  border: 1px solid rgba(252, 191, 191, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(209, 94, 121, 0.24);
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 180ms ease;
+}
+
+#custom-launcher:hover {
+  background: linear-gradient(140deg, rgba(245, 110, 143, 0.9), rgba(247, 178, 109, 0.88));
+  color: #ffffff;
+}
+
+#custom-launcher:active {
+  background: linear-gradient(140deg, rgba(217, 82, 116, 0.93), rgba(219, 145, 80, 0.9));
+}
+
 #workspaces button {
   color: #4b5563;
-  padding: 0 6px;
+  padding: 0 8px;
+  margin: 2px 2px;
+  transition: all 150ms ease;
+}
+
+#workspaces button:hover {
+  color: #ef5f84;
+  background: rgba(239, 95, 132, 0.14);
 }
 
 #workspaces button.active {
   color: #ef5f84;
   background: rgba(239, 95, 132, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(239, 95, 132, 0.35);
 }
 
 #window {

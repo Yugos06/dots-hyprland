@@ -6,9 +6,16 @@
   "margin-top": 8,
   "margin-left": 8,
   "margin-right": 8,
-  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
+  "custom/launcher": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Launcher",
+    "on-click": "~/.config/quickshell/end4-lite/scripts/toggle-launcher.sh",
+    "on-click-right": "~/.config/hypr/scripts/launchers.sh app"
+  },
   "hyprland/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
