@@ -52,9 +52,17 @@ scripts/
 
 1. Install packages: `hyprland quickshell waybar wofi mako kitty swww playerctl brightnessctl pamixer networkmanager`.
 2. Optional packages for shortcuts: `grimblast hyprlock`.
-3. Copy `dotconfig/*` into `~/.config/`.
-4. Run `chmod +x ~/.config/hypr/scripts/*.sh scripts/install.sh`.
-5. Start Hyprland.
+3. Run installer: `./scripts/install.sh`
+4. Start Hyprland.
+
+## Installer options
+
+- Default (copy mode + auto backup): `./scripts/install.sh`
+- Symlink mode (best for editing this repo live): `./scripts/install.sh --mode symlink`
+- Skip backup: `./scripts/install.sh --no-backup`
+- Non-interactive: `./scripts/install.sh -y`
+
+Backups are stored in `~/.config-backups/dots-hyprland-YYYYMMDD-HHMMSS`.
 
 ## Notes
 
