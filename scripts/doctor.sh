@@ -90,6 +90,27 @@ check_cmd "qs" "Quickshell" 1
 check_cmd "waybar" "Waybar" 1
 check_cmd "wofi" "Wofi" 1
 check_cmd "mako" "Mako" 1
+
+# One graphical PolicyKit agent is needed for pkexec / GUI privilege prompts.
+if command -v lxqt-policykit-agent >/dev/null 2>&1; then
+    ok "found PolicyKit agent (lxqt-policykit-agent)"
+elif command -v polkit-gnome-authentication-agent-1 >/dev/null 2>&1; then
+    ok "found PolicyKit agent (polkit-gnome-authentication-agent-1)"
+elif command -v polkit-kde-authentication-agent-1 >/dev/null 2>&1; then
+    ok "found PolicyKit agent (polkit-kde-authentication-agent-1)"
+elif command -v polkit-mate-authentication-agent-1 >/dev/null 2>&1; then
+    ok "found PolicyKit agent (polkit-mate-authentication-agent-1)"
+elif command -v xfce-polkit >/dev/null 2>&1; then
+    ok "found PolicyKit agent (xfce-polkit)"
+else
+    if [ "$STRICT" -eq 1 ]; then
+        err "missing PolicyKit agent (install one: lxqt-policykit / polkit-gnome / polkit-kde-agent / mate-polkit / xfce-polkit)"
+        missing_required=$((missing_required + 1))
+    else
+        warn "missing PolicyKit agent (install one: lxqt-policykit / polkit-gnome / polkit-kde-agent / mate-polkit / xfce-polkit)"
+    fi
+fi
+
 check_cmd "kitty" "Kitty" 1
 check_cmd "swww" "swww" 1
 check_cmd "playerctl" "playerctl" 1

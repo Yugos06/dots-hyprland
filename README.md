@@ -52,7 +52,7 @@ scripts/
 
 ## Quick start
 
-1. Install packages: `hyprland quickshell waybar wofi mako kitty swww playerctl brightnessctl pamixer networkmanager`.
+1. Install packages: `hyprland quickshell waybar wofi mako kitty swww playerctl brightnessctl pamixer networkmanager lxqt-policykit`.
 2. Optional packages for shortcuts: `grimblast hyprlock`.
 3. Optional for wallpaper color extraction: `imagemagick` (`magick` command).
 4. Run installer: `./scripts/install.sh`
