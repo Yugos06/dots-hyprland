@@ -22,41 +22,29 @@ ShellRoot {
         model: Quickshell.screens
 
         PanelWindow {
-            id: topBarWindow
+            id: leftSettingsWindow
             required property var modelData
             screen: modelData
+            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+            WlrLayershell.layer: WlrLayer.Top
+            WlrLayershell.namespace: "end4-left-settings"
             anchors.top: true
             anchors.left: true
-            anchors.right: true
-            implicitHeight: 42
-            color: "transparent"
-
-            Bar.TopBar {
-                anchors.fill: parent
-                theme: themeBridge
-                status: status
-            }
-        }
-
-        PanelWindow {
-            id: rightPanelWindow
-            required property var modelData
-            screen: modelData
-            anchors.top: true
-            anchors.right: true
             anchors.bottom: true
-            implicitWidth: 360
-            margins.top: 54
-            margins.right: 10
-            margins.bottom: 14
+            implicitWidth: leftSettingsPanel.implicitWidth
+            implicitHeight: modelData.height
             color: "transparent"
 
-            Panels.RightPanel {
+            Panels.LeftSettingsPanel {
+                id: leftSettingsPanel
                 anchors.fill: parent
                 theme: themeBridge
-                status: status
             }
         }
+    }
+
+    Variants {
+        model: Quickshell.screens
 
         PanelWindow {
             id: bottomDockWindow
@@ -64,12 +52,12 @@ ShellRoot {
             screen: modelData
             WlrLayershell.exclusionMode: ExclusionMode.Ignore
             WlrLayershell.layer: WlrLayer.Top
-            anchors.left: true
-            anchors.right: true
+            WlrLayershell.namespace: "end4-bottom-dock"
             anchors.bottom: true
+            anchors.left: true
+            implicitWidth: bottomDock.hiddenMode ? 0 : bottomDock.implicitWidth
             implicitHeight: bottomDock.hiddenMode ? 0 : 56
-            margins.left: 12
-            margins.right: 12
+            margins.left: bottomDock.hiddenMode ? 0 : Math.max(0, Math.round((modelData.width - implicitWidth) / 2))
             margins.bottom: 4
             color: "transparent"
 

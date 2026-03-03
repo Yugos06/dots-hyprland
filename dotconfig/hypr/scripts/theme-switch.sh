@@ -7,7 +7,7 @@ WAYBAR_STYLE_OUT="${HOME}/.config/waybar/style.css"
 WOFI_STYLE_OUT="${HOME}/.config/wofi/style.css"
 MAKO_OUT="${HOME}/.config/mako/config"
 CURRENT_FILE="${THEMES_DIR}/current.theme"
-WALL="${HOME}/Pictures/wallpapers/current.jpg"
+WALL="${HOME}/.config/wallpapers/current"
 QS_THEME_BRIDGE="${HOME}/.config/quickshell/end4-lite/services/ThemeBridge.qml"
 QS_PATH="${HOME}/.config/quickshell/end4-lite"
 

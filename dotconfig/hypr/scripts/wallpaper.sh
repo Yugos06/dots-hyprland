@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
+set -eu
 
-WALL="${HOME}/Pictures/wallpapers/current.jpg"
-
-if [ -f "$WALL" ]; then
-    swww img "$WALL" --transition-type grow --transition-pos 0.85,0.95 --transition-duration 1
-fi
+exec "${HOME}/.config/hypr/scripts/wallpaper-apply.sh" "${1:-}"

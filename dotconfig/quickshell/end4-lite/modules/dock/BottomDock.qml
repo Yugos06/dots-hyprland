@@ -6,8 +6,14 @@ Rectangle {
     id: dock
     required property QtObject palette
     color: "transparent"
+
+    // Hidden until Quickshell restarts when No Focus is pressed.
     property bool hiddenMode: false
+    property bool showIcons: true
+
     readonly property string defaultIcon: "/usr/share/icons/Adwaita/scalable/mimetypes/application-x-executable.svg"
+    readonly property string iconShow: "/usr/share/icons/Papirus/24x24/actions/view-visible.svg"
+    readonly property string iconHide: "/usr/share/icons/Papirus/24x24/actions/view-hidden.svg"
 
     readonly property var entries: [
         {
@@ -47,21 +53,49 @@ Rectangle {
             command: "hyprlock"
         },
         {
+            label: "Icons",
+            toggleIcons: true
+        },
+        {
             label: "No Focus",
-            iconFile: "/usr/share/icons/Papirus/24x24/actions/view-hidden.svg",
             toggleFocus: true
         }
     ]
+
+    implicitWidth: dockFrame.width
+    implicitHeight: dockFrame.height + dockFrame.anchors.bottomMargin
 
     function launch(command) {
         if (!command || command.length === 0) {
             return;
         }
 
-        Quickshell.execDetached(["hyprctl", "dispatch", "exec", command]);
+        Quickshell.execDetached(["sh", "-lc", command]);
+    }
+
+    function triggerEntry(entry) {
+        if (entry.toggleFocus === true) {
+            dock.hiddenMode = true;
+            return;
+        }
+        if (entry.toggleIcons === true) {
+            dock.showIcons = !dock.showIcons;
+            return;
+        }
+        dock.launch(entry.command);
+    }
+
+    function shouldShowVisual(entry) {
+        return showIcons || entry.toggleIcons === true || entry.toggleFocus === true;
     }
 
     function iconSource(entry) {
+        if (entry.toggleIcons === true) {
+            return showIcons ? iconHide : iconShow;
+        }
+        if (entry.toggleFocus === true) {
+            return iconHide;
+        }
         if (entry.iconFile && entry.iconFile.length > 0) {
             return entry.iconFile;
         }
@@ -80,14 +114,8 @@ Rectangle {
         border.width: 1
         border.color: Qt.rgba(1, 1, 1, 0.85)
         gradient: Gradient {
-            GradientStop {
-                position: 0.0
-                color: "#141414f2"
-            }
-            GradientStop {
-                position: 1.0
-                color: "#090909eb"
-            }
+            GradientStop { position: 0.0; color: "#141414f2" }
+            GradientStop { position: 1.0; color: "#090909eb" }
         }
 
         Rectangle {
@@ -109,6 +137,7 @@ Rectangle {
 
                 delegate: Item {
                     readonly property bool isSeparator: modelData.separator === true
+                    readonly property bool visualMode: dock.shouldShowVisual(modelData)
                     width: isSeparator ? 8 : 34
                     height: 32
 
@@ -148,10 +177,10 @@ Rectangle {
                             source: dock.iconSource(modelData)
                             fillMode: Image.PreserveAspectFit
                             smooth: true
+                            visible: visualMode && status === Image.Ready
                         }
 
                         Image {
-                            id: fallbackIcon
                             anchors.centerIn: parent
                             width: 16
                             height: 16
@@ -160,7 +189,16 @@ Rectangle {
                             source: dock.defaultIcon
                             fillMode: Image.PreserveAspectFit
                             smooth: true
-                            visible: icon.status !== Image.Ready
+                            visible: visualMode && icon.status !== Image.Ready
+                        }
+
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: 6
+                            height: 6
+                            radius: 99
+                            color: Qt.alpha(palette.barText, 0.5)
+                            visible: !visualMode
                         }
 
                         MouseArea {
@@ -169,12 +207,11 @@ Rectangle {
                             hoverEnabled: true
                             acceptedButtons: Qt.LeftButton
                             preventStealing: true
-                            onClicked: {
-                                if (modelData.toggleFocus === true) {
-                                    dock.hiddenMode = true;
+                            onPressed: function(mouse) {
+                                if (mouse.button !== Qt.LeftButton) {
                                     return;
                                 }
-                                dock.launch(modelData.command);
+                                dock.triggerEntry(modelData);
                             }
                         }
 

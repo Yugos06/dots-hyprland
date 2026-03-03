@@ -77,7 +77,7 @@ case "${MODE}" in
         ;;
 esac
 
-SRC_ITEMS="hypr waybar wofi mako quickshell themes"
+SRC_ITEMS="hypr waybar wofi mako quickshell themes wallpapers"
 TOTAL_STEPS=5
 STEP=1
 
