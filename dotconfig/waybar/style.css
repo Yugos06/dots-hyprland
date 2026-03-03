@@ -1,6 +1,6 @@
 * {
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
   font-size: 12px;
   min-height: 0;
@@ -8,12 +8,20 @@
 
 window#waybar {
   background: transparent;
-  color: #e6e6ff;
+  color: #dbe8ff;
 }
 
-#workspaces,
+tooltip {
+  background: rgba(8, 12, 20, 0.96);
+  color: #dbe8ff;
+  border: 1px solid rgba(154, 185, 221, 0.58);
+  border-radius: 12px;
+}
+
 #custom-apps-launcher,
 #custom-menu-launcher,
+#custom-notifications,
+#workspaces,
 #window,
 #clock,
 #pulseaudio,
@@ -22,70 +30,76 @@ window#waybar {
 #memory,
 #battery,
 #tray {
-  background: linear-gradient(180deg, rgba(24, 15, 49, 0.8), rgba(10, 8, 26, 0.84));
-  border: 1px solid rgba(191, 134, 255, 0.35);
-  color: #e6e6ff;
-  padding: 6px 10px;
+  margin: 0 4px;
+  background: linear-gradient(180deg, rgba(17, 24, 38, 0.9), rgba(8, 12, 20, 0.93));
+  border: 1px solid rgba(129, 159, 193, 0.35);
+  color: #dbe8ff;
+  padding: 7px 12px;
+  box-shadow: 0 8px 24px rgba(2, 6, 15, 0.45);
 }
 
 #custom-apps-launcher,
-#custom-menu-launcher {
+#custom-menu-launcher,
+#custom-notifications {
   min-width: 34px;
-  padding-left: 12px;
-  padding-right: 12px;
   font-size: 15px;
   font-weight: 700;
   transition: all 180ms ease;
 }
 
 #custom-apps-launcher {
-  color: #f7d8ff;
-  background: linear-gradient(140deg, rgba(175, 110, 255, 0.42), rgba(87, 142, 255, 0.34));
-  border: 1px solid rgba(226, 189, 255, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 8px 20px rgba(90, 30, 160, 0.22);
+  color: #eff6ff;
+  background: linear-gradient(140deg, rgba(94, 146, 214, 0.74), rgba(70, 104, 162, 0.78));
+  border: 1px solid rgba(182, 216, 255, 0.68);
 }
 
 #custom-apps-launcher:hover {
-  background: linear-gradient(140deg, rgba(196, 128, 255, 0.56), rgba(120, 173, 255, 0.45));
+  background: linear-gradient(140deg, rgba(120, 171, 238, 0.84), rgba(86, 125, 188, 0.86));
   color: #ffffff;
-}
-
-#custom-apps-launcher:active {
-  background: linear-gradient(140deg, rgba(148, 95, 215, 0.72), rgba(95, 139, 212, 0.72));
 }
 
 #custom-menu-launcher {
-  color: #ffe6fd;
-  background: linear-gradient(140deg, rgba(255, 121, 198, 0.34), rgba(165, 106, 255, 0.34));
-  border: 1px solid rgba(255, 192, 244, 0.6);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 8px 20px rgba(141, 39, 132, 0.2);
+  color: #f6ecff;
+  background: linear-gradient(140deg, rgba(144, 116, 214, 0.72), rgba(97, 81, 178, 0.78));
+  border: 1px solid rgba(214, 192, 255, 0.64);
 }
 
 #custom-menu-launcher:hover {
-  background: linear-gradient(140deg, rgba(255, 138, 206, 0.5), rgba(191, 131, 255, 0.5));
+  background: linear-gradient(140deg, rgba(166, 135, 235, 0.82), rgba(117, 98, 202, 0.84));
   color: #ffffff;
 }
 
-#custom-menu-launcher:active {
-  background: linear-gradient(140deg, rgba(202, 96, 160, 0.7), rgba(145, 87, 213, 0.7));
+#custom-notifications {
+  color: #d9ebff;
+  background: linear-gradient(140deg, rgba(86, 122, 166, 0.5), rgba(66, 92, 132, 0.54));
+  border: 1px solid rgba(178, 212, 255, 0.52);
+}
+
+#custom-notifications:hover {
+  background: linear-gradient(140deg, rgba(108, 147, 196, 0.64), rgba(83, 114, 161, 0.66));
+  color: #ffffff;
+}
+
+#workspaces {
+  padding: 5px 8px;
 }
 
 #workspaces button {
-  color: #b8b6ff;
-  padding: 0 8px;
-  margin: 2px 2px;
-  transition: all 150ms ease;
+  color: #9cb0cc;
+  padding: 0 10px;
+  margin: 2px;
+  transition: all 140ms ease;
 }
 
 #workspaces button:hover {
-  color: #efe6ff;
-  background: rgba(138, 91, 212, 0.3);
+  color: #e7f2ff;
+  background: rgba(117, 161, 217, 0.28);
 }
 
 #workspaces button.active {
-  color: #f6c8ff;
-  background: rgba(180, 110, 255, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(255, 206, 255, 0.35);
+  color: #e4f2ff;
+  background: rgba(129, 178, 240, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(194, 223, 255, 0.36);
 }
 
 #window {
@@ -94,8 +108,9 @@ window#waybar {
 }
 
 #clock {
-  color: #ffd8fb;
+  color: #cbe6ff;
   font-weight: 700;
+  font-size: 13px;
 }
 
 #battery.warning {
@@ -103,5 +118,5 @@ window#waybar {
 }
 
 #battery.critical {
-  color: #ff6b9f;
+  color: #ff7a9d;
 }

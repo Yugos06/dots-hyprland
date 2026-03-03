@@ -1,12 +1,12 @@
 {
   "position": "top",
-  "height": 36,
+  "height": 38,
   "spacing": 8,
   "layer": "top",
   "margin-top": 8,
   "margin-left": 8,
   "margin-right": 8,
-  "modules-left": ["custom/apps-launcher", "custom/menu-launcher", "hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/apps-launcher", "custom/menu-launcher", "custom/notifications", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
   "custom/apps-launcher": {
@@ -22,6 +22,16 @@
     "tooltip-format": "Actions",
     "on-click": "~/.config/quickshell/end4-lite/scripts/toggle-launcher.sh",
     "on-click-right": "~/.config/hypr/scripts/theme-switch.sh menu"
+  },
+  "custom/notifications": {
+    "exec": "sh -c 'if command -v makoctl >/dev/null 2>&1; then mode=$(makoctl mode 2>/dev/null || true); [ \"$mode\" = \"do-not-disturb\" ] && echo \"󰂛\" || echo \"\"; else echo \"\"; fi'",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": true,
+    "tooltip-format": "Notifications",
+    "on-click": "sh -c 'command -v makoctl >/dev/null 2>&1 && makoctl restore || true'",
+    "on-click-right": "sh -c 'command -v makoctl >/dev/null 2>&1 && makoctl dismiss -a || true'",
+    "on-click-middle": "sh -c 'command -v makoctl >/dev/null 2>&1 && makoctl mode -t do-not-disturb || true'"
   },
   "hyprland/workspaces": {
     "format": "{icon}",
@@ -45,8 +55,10 @@
     "separate-outputs": true
   },
   "clock": {
-    "format": "{:%I:%M %p}",
-    "tooltip-format": "<big>{:%A, %d %B %Y}</big>"
+    "locale": "fr_FR.UTF-8",
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A %d %B}",
+    "tooltip-format": "<big>{:%A %d %B %Y}</big>\n<tt>{calendar}</tt>"
   },
   "pulseaudio": {
     "format": "{volume}%",

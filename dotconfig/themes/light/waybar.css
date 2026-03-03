@@ -1,6 +1,6 @@
 * {
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
   font-size: 12px;
   min-height: 0;
@@ -11,9 +11,17 @@ window#waybar {
   color: #1f2937;
 }
 
-#workspaces,
+tooltip {
+  background: rgba(255, 255, 255, 0.96);
+  color: #1f2937;
+  border: 1px solid rgba(126, 142, 162, 0.5);
+  border-radius: 12px;
+}
+
 #custom-apps-launcher,
 #custom-menu-launcher,
+#custom-notifications,
+#workspaces,
 #window,
 #clock,
 #pulseaudio,
@@ -22,17 +30,18 @@ window#waybar {
 #memory,
 #battery,
 #tray {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(240, 244, 248, 0.9));
-  border: 1px solid rgba(239, 95, 132, 0.35);
+  margin: 0 4px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(242, 246, 251, 0.94));
+  border: 1px solid rgba(156, 169, 186, 0.34);
   color: #1f2937;
-  padding: 6px 10px;
+  padding: 7px 12px;
+  box-shadow: 0 8px 24px rgba(94, 112, 139, 0.22);
 }
 
 #custom-apps-launcher,
-#custom-menu-launcher {
+#custom-menu-launcher,
+#custom-notifications {
   min-width: 34px;
-  padding-left: 12px;
-  padding-right: 12px;
   font-size: 15px;
   font-weight: 700;
   transition: all 180ms ease;
@@ -40,52 +49,56 @@ window#waybar {
 
 #custom-apps-launcher {
   color: #ffffff;
-  background: linear-gradient(140deg, rgba(239, 95, 132, 0.84), rgba(242, 166, 90, 0.82));
-  border: 1px solid rgba(252, 191, 191, 0.92);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(209, 94, 121, 0.24);
+  background: linear-gradient(140deg, rgba(241, 107, 145, 0.86), rgba(245, 174, 101, 0.86));
+  border: 1px solid rgba(255, 214, 214, 0.9);
 }
 
 #custom-apps-launcher:hover {
-  background: linear-gradient(140deg, rgba(245, 110, 143, 0.9), rgba(247, 178, 109, 0.88));
+  background: linear-gradient(140deg, rgba(246, 125, 159, 0.92), rgba(250, 188, 120, 0.92));
   color: #ffffff;
-}
-
-#custom-apps-launcher:active {
-  background: linear-gradient(140deg, rgba(217, 82, 116, 0.93), rgba(219, 145, 80, 0.9));
 }
 
 #custom-menu-launcher {
   color: #ffffff;
-  background: linear-gradient(140deg, rgba(191, 111, 230, 0.82), rgba(125, 157, 240, 0.82));
-  border: 1px solid rgba(209, 182, 246, 0.95);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 8px 20px rgba(143, 106, 201, 0.26);
+  background: linear-gradient(140deg, rgba(165, 120, 234, 0.82), rgba(120, 156, 241, 0.84));
+  border: 1px solid rgba(224, 209, 255, 0.94);
 }
 
 #custom-menu-launcher:hover {
-  background: linear-gradient(140deg, rgba(205, 124, 242, 0.9), rgba(139, 170, 247, 0.9));
+  background: linear-gradient(140deg, rgba(179, 133, 247, 0.9), rgba(135, 171, 250, 0.9));
   color: #ffffff;
 }
 
-#custom-menu-launcher:active {
-  background: linear-gradient(140deg, rgba(171, 95, 208, 0.92), rgba(113, 142, 221, 0.92));
+#custom-notifications {
+  color: #1f2937;
+  background: linear-gradient(140deg, rgba(159, 176, 203, 0.44), rgba(136, 156, 184, 0.5));
+  border: 1px solid rgba(151, 172, 200, 0.6);
+}
+
+#custom-notifications:hover {
+  background: linear-gradient(140deg, rgba(174, 191, 217, 0.58), rgba(148, 169, 198, 0.62));
+}
+
+#workspaces {
+  padding: 5px 8px;
 }
 
 #workspaces button {
   color: #4b5563;
-  padding: 0 8px;
-  margin: 2px 2px;
-  transition: all 150ms ease;
+  padding: 0 10px;
+  margin: 2px;
+  transition: all 140ms ease;
 }
 
 #workspaces button:hover {
-  color: #ef5f84;
-  background: rgba(239, 95, 132, 0.14);
+  color: #ec4e7e;
+  background: rgba(239, 95, 132, 0.16);
 }
 
 #workspaces button.active {
-  color: #ef5f84;
+  color: #ec4e7e;
   background: rgba(239, 95, 132, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(239, 95, 132, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(239, 95, 132, 0.36);
 }
 
 #window {
@@ -96,6 +109,7 @@ window#waybar {
 #clock {
   color: #be185d;
   font-weight: 700;
+  font-size: 13px;
 }
 
 #battery.warning {

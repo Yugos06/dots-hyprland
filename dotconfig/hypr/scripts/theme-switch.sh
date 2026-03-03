@@ -24,7 +24,7 @@ apply_mako() {
     cat > "${MAKO_OUT}" <<'EOF'
 sort=-time
 layer=overlay
-anchor=top-right
+anchor=top-left
 padding=14
 width=360
 height=180
