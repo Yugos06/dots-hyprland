@@ -1,7 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Wayland
 import "modules/bar" as Bar
+import "modules/dock" as Dock
 import "modules/panels" as Panels
 import "services" as Services
 
@@ -9,7 +11,7 @@ ShellRoot {
     id: root
 
     Services.ThemeBridge {
-        id: theme
+        id: themeBridge
     }
 
     Services.StatusStore {
@@ -31,7 +33,7 @@ ShellRoot {
 
             Bar.TopBar {
                 anchors.fill: parent
-                theme: theme
+                theme: themeBridge
                 status: status
             }
         }
@@ -51,8 +53,30 @@ ShellRoot {
 
             Panels.RightPanel {
                 anchors.fill: parent
-                theme: theme
+                theme: themeBridge
                 status: status
+            }
+        }
+
+        PanelWindow {
+            id: bottomDockWindow
+            required property var modelData
+            screen: modelData
+            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+            WlrLayershell.layer: WlrLayer.Top
+            anchors.left: true
+            anchors.right: true
+            anchors.bottom: true
+            implicitHeight: bottomDock.hiddenMode ? 0 : 56
+            margins.left: 12
+            margins.right: 12
+            margins.bottom: 4
+            color: "transparent"
+
+            Dock.BottomDock {
+                id: bottomDock
+                anchors.fill: parent
+                palette: themeBridge
             }
         }
     }

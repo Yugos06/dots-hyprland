@@ -81,6 +81,7 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
 - Quickshell profile lives in `dotconfig/quickshell/end4-lite`.
 - Hyprland autostart launches `~/.config/hypr/scripts/start-shell.sh` (Quickshell first, fallback to Waybar/Mako).
 - Quickshell live data is provided by `~/.config/quickshell/end4-lite/scripts/status-daemon.sh`.
+- Quickshell also includes a bottom dock (`modules/dock/BottomDock.qml`) for fast app launch.
 - `SUPER+SPACE` opens the actions launcher.
 - `SUPER+A` opens the app launcher (`wofi drun` with app icons), `SUPER+SHIFT+A` opens `wofi run`.
 - Waybar has 2 dedicated launcher pills (left side):
