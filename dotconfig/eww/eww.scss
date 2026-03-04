@@ -1,0 +1,422 @@
+$bg: rgba(15, 17, 23, 0.9);
+$card: rgba(23, 26, 35, 0.88);
+$card-alt: rgba(29, 33, 44, 0.84);
+$text: #ecefff;
+$muted: #a7acd0;
+$accent: #b4a7ff;
+$pink: #f5a9ff;
+$border: rgba(180, 167, 255, 0.24);
+$border-soft: rgba(245, 169, 255, 0.18);
+$shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+$ease-out-cubic: cubic-bezier(0.22, 1, 0.36, 1);
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+  color: $text;
+}
+
+.dashboard-root {
+  padding: 0;
+  background-color: transparent;
+}
+
+.glass-shell {
+  min-width: 860px;
+  min-height: 412px;
+  border-radius: 22px;
+  padding: 8px 10px 10px;
+  border: 1px solid $border;
+  background-color: $bg;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+}
+
+.tabs-row {
+  min-height: 44px;
+  padding: 2px 2px 4px;
+  border-bottom: 1px solid rgba(180, 167, 255, 0.2);
+}
+
+.tab-chip {
+  min-width: 136px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.02);
+  transition: all 220ms $ease-out-cubic;
+}
+
+.tab-chip:hover {
+  background-color: rgba(180, 167, 255, 0.12);
+}
+
+.tab-chip.active {
+  background-color: rgba(180, 167, 255, 0.18);
+}
+
+.tab-icon {
+  font-size: 12px;
+  color: $muted;
+}
+
+.tab-title {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.tab-chip.active .tab-icon,
+.tab-chip.active .tab-title {
+  color: $text;
+}
+
+.tab-pages {
+  min-height: 0;
+}
+
+.page {
+  min-height: 0;
+}
+
+.glass-card {
+  background-color: $card;
+  border-radius: 16px;
+  border: 1px solid rgba(180, 167, 255, 0.16);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
+  padding: 10px;
+}
+
+.clock-rail {
+  min-width: 56px;
+  min-height: 284px;
+  background-color: $card-alt;
+}
+
+.clock-part {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.clock-dot {
+  font-size: 14px;
+  color: $accent;
+}
+
+.dashboard-center {
+  min-width: 472px;
+}
+
+.weather-card {
+  min-width: 230px;
+  min-height: 78px;
+}
+
+.weather-icon {
+  font-size: 32px;
+  color: $accent;
+}
+
+.weather-temp {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.weather-desc {
+  font-size: 12px;
+  color: $muted;
+}
+
+.system-card {
+  min-width: 230px;
+  min-height: 78px;
+}
+
+.system-line {
+  font-size: 12px;
+  color: #d6dbff;
+}
+
+.calendar-card {
+  min-width: 344px;
+  min-height: 186px;
+}
+
+.month-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: $accent;
+}
+
+.calendar-grid {
+  font-family: "JetBrainsMono Nerd Font Mono", "Noto Sans Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+
+.sliders-card {
+  min-width: 118px;
+  min-height: 186px;
+}
+
+.slider-col {
+  min-width: 48px;
+}
+
+.slider-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: $muted;
+}
+
+.vertical-slider {
+  min-width: 22px;
+  min-height: 118px;
+}
+
+.vertical-slider trough {
+  min-width: 8px;
+  min-height: 96px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.vertical-slider highlight {
+  border-radius: 999px;
+  background-image: linear-gradient(180deg, $accent 0%, $pink 100%);
+}
+
+.vertical-slider slider {
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 2px solid $pink;
+  transition: all 180ms $ease-out-cubic;
+}
+
+.music-card {
+  min-width: 168px;
+  min-height: 284px;
+  background-color: rgba(28, 31, 42, 0.9);
+  border: 1px solid $border-soft;
+}
+
+.music-card.compact {
+  min-width: 160px;
+}
+
+.cover-round {
+  border-radius: 99px;
+  border: 2px solid rgba(180, 167, 255, 0.34);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.music-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.music-artist {
+  font-size: 10px;
+  color: $muted;
+}
+
+.music-status {
+  font-size: 10px;
+  color: $accent;
+}
+
+.media-controls {
+  margin-top: 4px;
+}
+
+.media-btn {
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 9px;
+  background-color: rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  transition: all 180ms $ease-out-cubic;
+}
+
+.media-btn:hover {
+  background-color: rgba(180, 167, 255, 0.18);
+}
+
+.media-btn.primary {
+  min-width: 32px;
+  min-height: 32px;
+  background-image: linear-gradient(135deg, rgba(180, 167, 255, 0.35) 0%, rgba(245, 169, 255, 0.35) 100%);
+}
+
+.media-page {
+  min-height: 458px;
+}
+
+.media-side {
+  min-width: 526px;
+  min-height: 284px;
+}
+
+.media-side-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: $accent;
+}
+
+.media-side-line {
+  font-size: 12px;
+}
+
+.media-side-line.muted {
+  color: $muted;
+}
+
+.media-volume-block {
+  margin-top: 6px;
+}
+
+.horizontal-slider {
+  min-height: 20px;
+}
+
+.horizontal-slider trough {
+  min-height: 7px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.horizontal-slider highlight {
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, $accent 0%, $pink 100%);
+}
+
+.horizontal-slider slider {
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 2px solid $accent;
+}
+
+.performance-page {
+  min-height: 458px;
+}
+
+.perf-card {
+  min-width: 372px;
+  min-height: 104px;
+}
+
+.perf-head {
+  margin-bottom: 4px;
+}
+
+.perf-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.perf-main-value {
+  font-size: 23px;
+  font-weight: 800;
+  color: $accent;
+}
+
+.perf-sub {
+  font-size: 12px;
+  color: $muted;
+}
+
+.perf-progress {
+  min-height: 10px;
+}
+
+.perf-progress trough {
+  min-height: 7px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.perf-progress progress {
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, $accent 0%, $pink 100%);
+  transition: all 240ms $ease-out-cubic;
+}
+
+.ring-card {
+  min-width: 188px;
+  min-height: 186px;
+}
+
+.ring {
+  color: $accent;
+  min-height: 98px;
+  min-width: 98px;
+}
+
+.ring-ram {
+  color: $pink;
+}
+
+.ring-storage {
+  color: $accent;
+}
+
+.ring-value {
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.ring-sub {
+  font-size: 12px;
+  color: $muted;
+}
+
+.network-card {
+  min-width: 230px;
+  min-height: 186px;
+}
+
+.network-lines {
+  font-family: "JetBrainsMono Nerd Font Mono", "Noto Sans Mono", monospace;
+  font-size: 12px;
+  color: #d8ddff;
+}
+
+.perf-stamp {
+  font-size: 11px;
+  color: $muted;
+}
+
+.weather-page {
+  min-height: 458px;
+}
+
+.weather-main {
+  min-height: 172px;
+}
+
+.weather-main-icon {
+  font-size: 58px;
+  color: $accent;
+}
+
+.weather-main-temp {
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.weather-main-desc {
+  font-size: 16px;
+  color: #d9dcf8;
+}
+
+.weather-main-detail {
+  font-size: 12px;
+  color: $muted;
+}
+
+.weather-extra {
+  min-height: 82px;
+}

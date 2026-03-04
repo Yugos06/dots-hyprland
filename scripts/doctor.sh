@@ -90,6 +90,7 @@ check_cmd "qs" "Quickshell" 1
 check_cmd "waybar" "Waybar" 1
 check_cmd "wofi" "Wofi" 1
 check_cmd "mako" "Mako" 1
+check_cmd "eww" "Eww" 0
 
 # One graphical PolicyKit agent is needed for pkexec / GUI privilege prompts.
 if command -v lxqt-policykit-agent >/dev/null 2>&1; then
@@ -119,6 +120,8 @@ check_cmd "pamixer" "pamixer" 1
 check_cmd "nmcli" "NetworkManager" 1
 check_cmd "grimblast" "grimblast" 0
 check_cmd "jq" "jq" 0
+check_cmd "sensors" "lm_sensors" 0
+check_cmd "vnstat" "vnstat" 0
 check_cmd "hyprlock" "hyprlock" 0
 
 if [ "$STRICT" -eq 1 ] && [ "$missing_required" -gt 0 ]; then

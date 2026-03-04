@@ -77,7 +77,7 @@ case "${MODE}" in
         ;;
 esac
 
-SRC_ITEMS="hypr waybar wofi mako quickshell themes wallpapers"
+SRC_ITEMS="hypr waybar wofi mako quickshell themes wallpapers eww"
 TOTAL_STEPS=5
 STEP=1
 
@@ -175,6 +175,7 @@ done
 
 chmod +x "${CFG_DIR}/hypr/scripts/"*.sh
 chmod +x "${CFG_DIR}/quickshell/end4-lite/scripts/"*.sh
+chmod +x "${CFG_DIR}/eww/scripts/"*.sh
 
 log ""
 log "${C_BOLD}${C_GREEN}Installation complete${C_RESET}"

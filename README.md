@@ -23,6 +23,10 @@ dotconfig/
   waybar/
     config.jsonc
     style.css
+  eww/
+    eww.yuck
+    eww.scss
+    scripts/
   wofi/
     config
     style.css
@@ -52,8 +56,8 @@ scripts/
 
 ## Quick start
 
-1. Install packages: `hyprland quickshell waybar wofi mako kitty swww playerctl brightnessctl pamixer networkmanager lxqt-policykit`.
-2. Optional packages for shortcuts: `grimblast hyprlock jq`.
+1. Install packages: `hyprland quickshell waybar wofi mako eww kitty swww playerctl brightnessctl pamixer networkmanager lxqt-policykit`.
+2. Optional packages for shortcuts/metrics: `grimblast hyprlock jq lm_sensors vnstat`.
 3. Optional for wallpaper color extraction: `imagemagick` (`magick` command).
 4. Run installer: `./scripts/install.sh`
 5. Start Hyprland.
@@ -90,6 +94,7 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
   - `SUPER+SHIFT+W`: random wallpaper
 - Wallpaper apply script updates `~/.config/hypr/conf/96-wallpaper-colors.conf` so borders/shadows adapt to wallpaper colors.
 - `SUPER+SPACE` opens the actions launcher.
+- `SUPER+D` toggles the Eww dashboard (`~/.config/eww/eww.yuck`).
 - `SUPER+A` opens the app launcher (`wofi drun` with app icons), `SUPER+SHIFT+A` opens `wofi run`.
 - `SUPER+ALT+A` opens dock add-app menu, `SUPER+ALT+SHIFT+A` (or `SUPER+ALT+R`) opens dock remove-app menu.
 - Dock controls:
@@ -105,6 +110,9 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
 - Waybar has a screenshot quick-action on the right side:
   - left click: area capture to file
   - right click: open screenshot folder
+- Waybar minimal dashboard example:
+  - config: `dotconfig/waybar/config.minimal.jsonc`
+  - style: `dotconfig/waybar/style.minimal.css`
 - Screenshots:
   - `Print`: area to clipboard + saved file
   - `Shift+Print`: full screen to clipboard + saved file

@@ -1,0 +1,324 @@
+(defvar active_tab "dashboard")
+
+(defpoll clock_hh :interval "1s" "~/.config/eww/scripts/datetime.sh hh")
+(defpoll clock_mm :interval "1s" "~/.config/eww/scripts/datetime.sh mm")
+(defpoll month_label :interval "60s" "~/.config/eww/scripts/datetime.sh month")
+(defpoll calendar_grid :interval "60s" "~/.config/eww/scripts/datetime.sh calendar")
+
+(defpoll weather_temp :interval "900s" "~/.config/eww/scripts/weather.sh temp")
+(defpoll weather_desc :interval "900s" "~/.config/eww/scripts/weather.sh desc")
+(defpoll weather_icon :interval "900s" "~/.config/eww/scripts/weather.sh icon")
+(defpoll weather_detail :interval "900s" "~/.config/eww/scripts/weather.sh detail")
+
+(defpoll os_name :interval "6h" "~/.config/eww/scripts/system.sh os")
+(defpoll wm_name :interval "6h" "~/.config/eww/scripts/system.sh wm")
+(defpoll uptime_text :interval "30s" "~/.config/eww/scripts/system.sh uptime")
+
+(defpoll volume_value :interval "2s" "~/.config/eww/scripts/volume.sh get")
+(defpoll brightness_value :interval "2s" "~/.config/eww/scripts/brightness.sh get")
+
+(defpoll media_title :interval "2s" "~/.config/eww/scripts/media.sh title")
+(defpoll media_artist :interval "2s" "~/.config/eww/scripts/media.sh artist")
+(defpoll media_status :interval "2s" "~/.config/eww/scripts/media.sh status")
+(defpoll media_status_icon :interval "2s" "~/.config/eww/scripts/media.sh status_icon")
+(defpoll media_cover :interval "4s" "~/.config/eww/scripts/media.sh cover")
+
+(defpoll cpu_name :interval "6h" "~/.config/eww/scripts/perf.sh cpu_name")
+(defpoll cpu_temp :interval "2s" "~/.config/eww/scripts/perf.sh cpu_temp")
+(defpoll cpu_usage :interval "2s" "~/.config/eww/scripts/perf.sh cpu_usage")
+(defpoll gpu_name :interval "6h" "~/.config/eww/scripts/perf.sh gpu_name")
+(defpoll gpu_temp :interval "2s" "~/.config/eww/scripts/perf.sh gpu_temp")
+(defpoll gpu_usage :interval "2s" "~/.config/eww/scripts/perf.sh gpu_usage")
+(defpoll ram_percent :interval "2s" "~/.config/eww/scripts/perf.sh ram_percent")
+(defpoll ram_text :interval "2s" "~/.config/eww/scripts/perf.sh ram_text")
+(defpoll disk_percent :interval "2s" "~/.config/eww/scripts/perf.sh disk_percent")
+(defpoll disk_text :interval "2s" "~/.config/eww/scripts/perf.sh disk_text")
+(defpoll disk_name :interval "2s" "~/.config/eww/scripts/perf.sh disk_name")
+(defpoll net_live :interval "2s" "~/.config/eww/scripts/perf.sh net_text")
+(defpoll perf_stamp :interval "2s" "~/.config/eww/scripts/perf.sh stamp")
+
+(defwindow dashboard
+  :monitor 0
+  :stacking "fg"
+  :focusable true
+  :exclusive false
+  :geometry (geometry :x "50%" :y "50%" :width "860px" :height "430px" :anchor "center")
+  (dashboard-root)
+)
+
+(defwidget tab-nav []
+  (box :class "tabs-row"
+       :orientation "h"
+       :spacing 10
+       :halign "center"
+       :hexpand true
+       :vexpand false
+       :valign "start"
+    (eventbox :onclick "~/.config/eww/scripts/set-tab.sh dashboard" :vexpand false :valign "start"
+      (box :class {active_tab == "dashboard" ? "tab-chip active" : "tab-chip"} :spacing 6 :vexpand false :valign "center"
+        (label :class "tab-icon" :text "󰕮")
+        (label :class "tab-title" :text "Dashboard")
+      )
+    )
+    (eventbox :onclick "~/.config/eww/scripts/set-tab.sh media" :vexpand false :valign "start"
+      (box :class {active_tab == "media" ? "tab-chip active" : "tab-chip"} :spacing 6 :vexpand false :valign "center"
+        (label :class "tab-icon" :text "󰎆")
+        (label :class "tab-title" :text "Media")
+      )
+    )
+    (eventbox :onclick "~/.config/eww/scripts/set-tab.sh performance" :vexpand false :valign "start"
+      (box :class {active_tab == "performance" ? "tab-chip active" : "tab-chip"} :spacing 6 :vexpand false :valign "center"
+        (label :class "tab-icon" :text "󰓅")
+        (label :class "tab-title" :text "Performance")
+      )
+    )
+    (eventbox :onclick "~/.config/eww/scripts/set-tab.sh weather" :vexpand false :valign "start"
+      (box :class {active_tab == "weather" ? "tab-chip active" : "tab-chip"} :spacing 6 :vexpand false :valign "center"
+        (label :class "tab-icon" :text "󰖙")
+        (label :class "tab-title" :text "Weather")
+      )
+    )
+  )
+)
+
+(defwidget clock-rail []
+  (box :class "glass-card clock-rail" :orientation "v" :space-evenly true
+    (label :class "clock-part" :text clock_hh)
+    (label :class "clock-dot" :text "•••")
+    (label :class "clock-part" :text clock_mm)
+  )
+)
+
+(defwidget weather-card []
+  (box :class "glass-card weather-card" :orientation "h" :spacing 12 :space-evenly false
+    (label :class "weather-icon" :text weather_icon)
+    (box :orientation "v" :spacing 4 :halign "start"
+      (label :class "weather-temp" :text weather_temp)
+      (label :class "weather-desc" :text weather_desc)
+    )
+  )
+)
+
+(defwidget system-card []
+  (box :class "glass-card system-card" :orientation "v" :spacing 8
+    (label :class "system-line" :text {"OS  : " + os_name})
+    (label :class "system-line" :text {"WM  : " + wm_name})
+    (label :class "system-line" :text {"UP  : " + uptime_text})
+  )
+)
+
+(defwidget calendar-card []
+  (box :class "glass-card calendar-card" :orientation "v" :spacing 6
+    (label :class "month-title" :text month_label)
+    (label :class "calendar-grid" :text calendar_grid)
+  )
+)
+
+(defwidget sliders-card []
+  (box :class "glass-card sliders-card" :orientation "h" :spacing 12
+    (box :class "slider-col" :orientation "v" :spacing 8 :halign "center"
+      (scale :class "vertical-slider"
+             :orientation "vertical"
+             :draw-value false
+             :min 0
+             :max 100
+             :value volume_value
+             :onchange "~/.config/eww/scripts/volume.sh set {}")
+      (label :class "slider-label" :text "VOL")
+    )
+    (box :class "slider-col" :orientation "v" :spacing 8 :halign "center"
+      (scale :class "vertical-slider"
+             :orientation "vertical"
+             :draw-value false
+             :min 0
+             :max 100
+             :value brightness_value
+             :onchange "~/.config/eww/scripts/brightness.sh set {}")
+      (label :class "slider-label" :text "BRT")
+    )
+  )
+)
+
+(defwidget music-card [compact]
+  (box :class {compact ? "glass-card music-card compact" : "glass-card music-card"}
+       :orientation "v"
+       :spacing 8
+    (image :class "cover-round"
+           :path media_cover
+           :image-width {compact ? 88 : 132}
+           :image-height {compact ? 88 : 132})
+    (label :class "music-title" :limit-width 30 :text media_title)
+    (label :class "music-artist" :limit-width 34 :text media_artist)
+    (box :class "media-controls" :spacing 8 :halign "center"
+      (button :class "media-btn" :onclick "playerctl previous" "󰒮")
+      (button :class "media-btn primary" :onclick "playerctl play-pause" media_status_icon)
+      (button :class "media-btn" :onclick "playerctl next" "󰒭")
+    )
+    (label :class "music-status" :text media_status)
+  )
+)
+
+(defwidget dashboard-page []
+  (box :class "page dashboard-page" :spacing 12 :halign "fill" :valign "start"
+    (clock-rail)
+    (box :class "dashboard-center" :orientation "v" :spacing 12
+      (box :spacing 12
+        (weather-card)
+        (system-card)
+      )
+      (box :spacing 12
+        (calendar-card)
+        (sliders-card)
+      )
+    )
+    (music-card :compact true)
+  )
+)
+
+(defwidget perf-cpu-card []
+  (box :class "glass-card perf-card" :orientation "v" :spacing 6
+    (box :class "perf-head"
+      (label :class "perf-title" :text {"CPU - " + cpu_name})
+      (label :class "perf-main-value" :text {cpu_usage + "%"})
+    )
+    (label :class "perf-sub" :text {cpu_temp + "C"})
+    (progress :class "perf-progress" :min 0 :max 100 :value cpu_usage)
+  )
+)
+
+(defwidget perf-gpu-card []
+  (box :class "glass-card perf-card" :orientation "v" :spacing 6
+    (box :class "perf-head"
+      (label :class "perf-title" :text {"GPU - " + gpu_name})
+      (label :class "perf-main-value" :text {gpu_usage + "%"})
+    )
+    (label :class "perf-sub" :text {gpu_temp + "C"})
+    (progress :class "perf-progress" :min 0 :max 100 :value gpu_usage)
+  )
+)
+
+(defwidget perf-ring-card [title percent text ringclass]
+  (box :class "glass-card ring-card" :orientation "v" :spacing 6
+    (label :class "perf-title" :text title)
+    (circular-progress :class ringclass
+                       :value percent
+                       :thickness 8
+                       :start-at 75
+      (label :class "ring-value" :text {percent + "%"})
+    )
+    (label :class "ring-sub" :text text)
+  )
+)
+
+(defwidget perf-network-card []
+  (box :class "glass-card network-card" :orientation "v" :spacing 6
+    (label :class "perf-title" :text "Network")
+    (label :class "network-lines" :text net_live)
+    (label :class "perf-stamp" :text {"Refresh " + perf_stamp})
+  )
+)
+
+(defwidget performance-page []
+  (box :class "page performance-page" :orientation "v" :spacing 12 :halign "fill" :valign "start"
+    (box :spacing 12
+      (perf-cpu-card)
+      (perf-gpu-card)
+    )
+    (box :spacing 12
+      (perf-ring-card :title "Memory" :percent ram_percent :text ram_text :ringclass "ring ring-ram")
+      (perf-ring-card :title {"Storage - " + disk_name} :percent disk_percent :text disk_text :ringclass "ring ring-storage")
+      (perf-network-card)
+    )
+  )
+)
+
+(defwidget media-page []
+  (box :class "page media-page" :spacing 12 :halign "fill" :valign "start"
+    (music-card :compact false)
+    (box :class "glass-card media-side" :orientation "v" :spacing 8
+      (label :class "media-side-title" :text "Now Playing")
+      (label :class "media-side-line" :text media_title)
+      (label :class "media-side-line muted" :text media_artist)
+      (label :class "media-side-line" :text {"Status: " + media_status})
+      (box :class "media-volume-block" :orientation "v" :spacing 8
+        (label :class "slider-label" :text "Volume")
+        (scale :class "horizontal-slider"
+               :draw-value false
+               :min 0
+               :max 100
+               :value volume_value
+               :onchange "~/.config/eww/scripts/volume.sh set {}")
+        (label :class "slider-label" :text "Brightness")
+        (scale :class "horizontal-slider"
+               :draw-value false
+               :min 0
+               :max 100
+               :value brightness_value
+               :onchange "~/.config/eww/scripts/brightness.sh set {}")
+      )
+    )
+  )
+)
+
+(defwidget weather-page []
+  (box :class "page weather-page" :orientation "v" :spacing 12 :halign "fill" :valign "start"
+    (box :class "glass-card weather-main" :spacing 16
+      (label :class "weather-main-icon" :text weather_icon)
+      (box :orientation "v" :spacing 8
+        (label :class "weather-main-temp" :text weather_temp)
+        (label :class "weather-main-desc" :text weather_desc)
+        (label :class "weather-main-detail" :text weather_detail)
+      )
+    )
+    (box :class "glass-card weather-extra" :orientation "v" :spacing 8
+      (label :class "perf-title" :text "System Snapshot")
+      (label :class "system-line" :text {"CPU " + cpu_usage + "%  |  RAM " + ram_percent + "%  |  DISK " + disk_percent + "%"})
+      (label :class "system-line" :text net_live)
+    )
+  )
+)
+
+(defwidget tab-pages []
+  (box :class "tab-pages"
+       :orientation "v"
+       :hexpand true
+       :vexpand false
+       :halign "fill"
+       :valign "start"
+    (box :visible {active_tab == "dashboard"} :halign "fill" :valign "start"
+      (dashboard-page)
+    )
+    (box :visible {active_tab == "media"} :halign "fill" :valign "start"
+      (media-page)
+    )
+    (box :visible {active_tab == "performance"} :halign "fill" :valign "start"
+      (performance-page)
+    )
+    (box :visible {active_tab == "weather"} :halign "fill" :valign "start"
+      (weather-page)
+    )
+  )
+)
+
+(defwidget dashboard-root []
+  (box :class "dashboard-root"
+       :orientation "v"
+       :halign "center"
+       :valign "start"
+       :vexpand true
+    (box :class "glass-shell"
+         :orientation "v"
+         :spacing 12
+         :halign "center"
+         :valign "start"
+         :hexpand false
+         :vexpand false
+      (box :hexpand true :vexpand false :valign "start"
+        (tab-nav)
+      )
+      (box :hexpand true :vexpand false :valign "start"
+        (tab-pages)
+      )
+    )
+  )
+)
