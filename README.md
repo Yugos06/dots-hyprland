@@ -53,7 +53,7 @@ scripts/
 ## Quick start
 
 1. Install packages: `hyprland quickshell waybar wofi mako kitty swww playerctl brightnessctl pamixer networkmanager lxqt-policykit`.
-2. Optional packages for shortcuts: `grimblast hyprlock`.
+2. Optional packages for shortcuts: `grimblast hyprlock jq`.
 3. Optional for wallpaper color extraction: `imagemagick` (`magick` command).
 4. Run installer: `./scripts/install.sh`
 5. Start Hyprland.
@@ -91,16 +91,28 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
 - Wallpaper apply script updates `~/.config/hypr/conf/96-wallpaper-colors.conf` so borders/shadows adapt to wallpaper colors.
 - `SUPER+SPACE` opens the actions launcher.
 - `SUPER+A` opens the app launcher (`wofi drun` with app icons), `SUPER+SHIFT+A` opens `wofi run`.
+- `SUPER+ALT+A` opens dock add-app menu, `SUPER+ALT+SHIFT+A` (or `SUPER+ALT+R`) opens dock remove-app menu.
 - Dock controls:
+  - `Add App`: add dynamic entries (Brave, Discord, Spotify, Steam, VS Code, Telegram)
+  - `Remove App`: remove a dynamic entry
+  - `Reload`: refresh dynamic dock entries immediately
   - `Icons`: toggle icon visibility on dock buttons
   - `No Focus`: hide dock until Quickshell restart
-- Waybar has 2 dedicated launcher pills (left side):
+- Waybar has dedicated launcher pills (left side):
   - apps launcher (left click: apps, right click: run)
   - actions launcher (left click: actions menu, right click: theme menu)
+  - notifications toggle (left click restore, right click dismiss all, middle click DND)
+- Waybar has a screenshot quick-action on the right side:
+  - left click: area capture to file
+  - right click: open screenshot folder
 - Screenshots:
-  - `Print`: area to clipboard
-  - `Shift+Print`: full screen to clipboard
-  - `SUPER+Print`: area to file (`~/Pictures/Screenshots`)
+  - `Print`: area to clipboard + saved file
+  - `Shift+Print`: full screen to clipboard + saved file
+  - `SUPER+Print`: area to file
+  - `SUPER+SHIFT+Print`: full screen to file
+  - `ALT+Print`: active window to clipboard + saved file
+  - `SUPER+CTRL+Print`: open screenshot folder
+  - Folder: `~/Pictures/screenshot`
 - Theme switch:
   - `~/.config/hypr/scripts/theme-switch.sh menu`
   - `~/.config/hypr/scripts/theme-switch.sh catppuccin|dark|light`

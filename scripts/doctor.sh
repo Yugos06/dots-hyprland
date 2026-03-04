@@ -118,6 +118,7 @@ check_cmd "brightnessctl" "brightnessctl" 1
 check_cmd "pamixer" "pamixer" 1
 check_cmd "nmcli" "NetworkManager" 1
 check_cmd "grimblast" "grimblast" 0
+check_cmd "jq" "jq" 0
 check_cmd "hyprlock" "hyprlock" 0
 
 if [ "$STRICT" -eq 1 ] && [ "$missing_required" -gt 0 ]; then

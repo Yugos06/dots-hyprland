@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Io
 
 Rectangle {
     id: dock
@@ -10,12 +11,24 @@ Rectangle {
     // Hidden until Quickshell restarts when No Focus is pressed.
     property bool hiddenMode: false
     property bool showIcons: true
+    property var dynamicEntries: []
 
     readonly property string defaultIcon: "/usr/share/icons/Adwaita/scalable/mimetypes/application-x-executable.svg"
     readonly property string iconShow: "/usr/share/icons/Papirus/24x24/actions/view-visible.svg"
     readonly property string iconHide: "/usr/share/icons/Papirus/24x24/actions/view-hidden.svg"
+    readonly property string iconAdd: "/usr/share/icons/Papirus/24x24/actions/list-add.svg"
+    readonly property string iconRemove: "/usr/share/icons/Papirus/24x24/actions/list-remove.svg"
+    readonly property string iconRefresh: "/usr/share/icons/Papirus/24x24/actions/view-refresh.svg"
+    readonly property color safeBorder: palette && palette.border ? palette.border : Qt.rgba(1, 1, 1, 0.22)
+    readonly property color safeAccentSoft: palette && palette.accentSoft ? palette.accentSoft : Qt.rgba(1, 1, 1, 0.14)
+    readonly property color safeBarText: palette && palette.barText ? palette.barText : Qt.rgba(1, 1, 1, 0.85)
 
-    readonly property var entries: [
+    readonly property string customEntriesPath: {
+        const u = Qt.resolvedUrl("../../runtime/dock-apps.list").toString();
+        return u.startsWith("file://") ? decodeURIComponent(u.slice(7)) : u;
+    }
+
+    readonly property var coreEntries: [
         {
             label: "Applications",
             iconFile: "/usr/share/icons/AdwaitaLegacy/24x24/places/start-here.png",
@@ -51,6 +64,21 @@ Rectangle {
             label: "Verrouiller",
             iconFile: "/usr/share/icons/AdwaitaLegacy/24x24/legacy/system-lock-screen.png",
             command: "hyprlock"
+        }
+    ]
+
+    readonly property var managementEntries: [
+        {
+            label: "Add App",
+            addDockApp: true
+        },
+        {
+            label: "Remove App",
+            removeDockApp: true
+        },
+        {
+            label: "Reload",
+            reloadDockApps: true
         },
         {
             label: "Icons",
@@ -62,8 +90,64 @@ Rectangle {
         }
     ]
 
+    readonly property var entries: {
+        var list = coreEntries.slice(0);
+        if (dynamicEntries.length > 0) {
+            list.push({ separator: true });
+            for (var i = 0; i < dynamicEntries.length; i++) {
+                list.push(dynamicEntries[i]);
+            }
+        }
+        list.push({ separator: true });
+        for (var j = 0; j < managementEntries.length; j++) {
+            list.push(managementEntries[j]);
+        }
+        return list;
+    }
+
     implicitWidth: dockFrame.width
     implicitHeight: dockFrame.height + dockFrame.anchors.bottomMargin
+
+    function parseDynamicEntries(raw) {
+        var out = [];
+        var lines = raw.split(/\r?\n/);
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (line.length === 0 || line.charAt(0) === "#") {
+                continue;
+            }
+
+            var parts = line.split("|");
+            var label = "";
+            var icon = "";
+            var command = "";
+
+            if (parts.length >= 4) {
+                label = parts[1].trim();
+                icon = parts[2].trim();
+                command = parts.slice(3).join("|").trim();
+            } else if (parts.length >= 3) {
+                label = parts[0].trim();
+                icon = parts[1].trim();
+                command = parts.slice(2).join("|").trim();
+            }
+
+            if (label.length === 0 || command.length === 0) {
+                continue;
+            }
+
+            out.push({
+                label: label,
+                iconFile: icon,
+                command: command
+            });
+        }
+        dock.dynamicEntries = out;
+    }
+
+    function reloadDynamicEntries() {
+        readDockApps.running = true;
+    }
 
     function launch(command) {
         if (!command || command.length === 0) {
@@ -74,6 +158,18 @@ Rectangle {
     }
 
     function triggerEntry(entry) {
+        if (entry.addDockApp === true) {
+            dock.launch("$HOME/.config/quickshell/end4-lite/scripts/dock-apps.sh add");
+            return;
+        }
+        if (entry.removeDockApp === true) {
+            dock.launch("$HOME/.config/quickshell/end4-lite/scripts/dock-apps.sh remove");
+            return;
+        }
+        if (entry.reloadDockApps === true) {
+            dock.reloadDynamicEntries();
+            return;
+        }
         if (entry.toggleFocus === true) {
             dock.hiddenMode = true;
             return;
@@ -90,6 +186,15 @@ Rectangle {
     }
 
     function iconSource(entry) {
+        if (entry.addDockApp === true) {
+            return iconAdd;
+        }
+        if (entry.removeDockApp === true) {
+            return iconRemove;
+        }
+        if (entry.reloadDockApps === true) {
+            return iconRefresh;
+        }
         if (entry.toggleIcons === true) {
             return showIcons ? iconHide : iconShow;
         }
@@ -101,6 +206,22 @@ Rectangle {
         }
         return defaultIcon;
     }
+
+    property Timer dockAppsPoll: Timer {
+        interval: 2500
+        running: true
+        repeat: true
+        onTriggered: dock.reloadDynamicEntries()
+    }
+
+    property Process readDockApps: Process {
+        command: ["sh", "-lc", "cat " + dock.customEntriesPath + " 2>/dev/null || true"]
+        stdout: StdioCollector {
+            onStreamFinished: dock.parseDynamicEntries(text)
+        }
+    }
+
+    Component.onCompleted: reloadDynamicEntries()
 
     Rectangle {
         id: dockFrame
@@ -146,7 +267,7 @@ Rectangle {
                         width: 1
                         height: 16
                         anchors.centerIn: parent
-                        color: palette.border
+                        color: safeBorder
                         opacity: 0.85
                     }
 
@@ -155,7 +276,7 @@ Rectangle {
                         visible: !isSeparator
                         anchors.fill: parent
                         radius: 10
-                        color: mouseArea.containsMouse ? palette.accentSoft : Qt.rgba(1, 1, 1, 0.02)
+                        color: mouseArea.containsMouse ? safeAccentSoft : Qt.rgba(1, 1, 1, 0.02)
                         border.width: mouseArea.containsMouse ? 1 : 0
                         border.color: Qt.rgba(1, 1, 1, 0.78)
                         scale: mouseArea.pressed ? 0.94 : (mouseArea.containsMouse ? 1.05 : 1.0)
@@ -197,7 +318,7 @@ Rectangle {
                             width: 6
                             height: 6
                             radius: 99
-                            color: Qt.alpha(palette.barText, 0.5)
+                            color: Qt.alpha(safeBarText, 0.5)
                             visible: !visualMode
                         }
 

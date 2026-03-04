@@ -8,7 +8,7 @@
   "margin-right": 8,
   "modules-left": ["custom/apps-launcher", "custom/menu-launcher", "custom/notifications", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
+  "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "custom/screenshot", "tray"],
   "custom/apps-launcher": {
     "format": "󰀻",
     "tooltip": true,
@@ -84,6 +84,13 @@
     },
     "format": "{capacity}%",
     "format-charging": "chg {capacity}%"
+  },
+  "custom/screenshot": {
+    "format": "󰄄",
+    "tooltip": true,
+    "tooltip-format": "Capture (click: zone, right: dossier)",
+    "on-click": "~/.config/hypr/scripts/screenshot.sh area-save",
+    "on-click-right": "~/.config/hypr/scripts/screenshot.sh open-dir"
   },
   "tray": {
     "spacing": 8
