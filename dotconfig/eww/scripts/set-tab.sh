@@ -5,7 +5,7 @@ tab="${1:-dashboard}"
 config_dir="${HOME}/.config/eww"
 
 case "${tab}" in
-    dashboard|media|performance|weather) ;;
+    dashboard|media|performance|weather|ai) ;;
     *)
         echo "invalid tab: ${tab}" >&2
         exit 1

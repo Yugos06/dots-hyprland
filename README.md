@@ -83,11 +83,12 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
 
 - Edit monitor settings in `dotconfig/hypr/conf/10-monitors.conf`.
 - Edit keybinds in `dotconfig/hypr/conf/40-keybinds.conf`.
-- Tune colors in `dotconfig/waybar/style.css` and `dotconfig/wofi/style.css`.
+- Tune colors in `dotconfig/waybar/theme.css` and `dotconfig/wofi/style.css`.
 - Quickshell profile lives in `dotconfig/quickshell/end4-lite`.
 - Hyprland autostart launches `~/.config/hypr/scripts/start-shell.sh` (Quickshell first, fallback to Waybar/Mako).
 - Quickshell live data is provided by `~/.config/quickshell/end4-lite/scripts/status-daemon.sh`.
 - Quickshell also includes a bottom dock (`modules/dock/BottomDock.qml`) for fast app launch.
+- Optional hypr-dock config is in `dotconfig/hypr-dock`. Enable it with `touch ~/.config/hypr/use-hypr-dock` then run `~/.config/hypr/scripts/start-shell.sh` (this hides the Quickshell dock).
 - Wallpaper folder: `~/.config/wallpapers`.
 - Wallpaper binds:
   - `SUPER+W`: wallpaper menu
@@ -103,13 +104,8 @@ Run quick checks for packages, file presence, deprecated syntax patterns, and `H
   - `Reload`: refresh dynamic dock entries immediately
   - `Icons`: toggle icon visibility on dock buttons
   - `No Focus`: hide dock until Quickshell restart
-- Waybar has dedicated launcher pills (left side):
-  - apps launcher (left click: apps, right click: run)
-  - actions launcher (left click: actions menu, right click: theme menu)
-  - notifications toggle (left click restore, right click dismiss all, middle click DND)
-- Waybar has a screenshot quick-action on the right side:
-  - left click: area capture to file
-  - right click: open screenshot folder
+- Waybar is now mechabar-style: modules live in `dotconfig/waybar/modules`, scripts in `dotconfig/waybar/scripts`, and the layout is in `dotconfig/waybar/config.jsonc`.
+- To swap Waybar palettes, copy one of `dotconfig/waybar/themes/*.css` over `dotconfig/waybar/theme.css`.
 - Waybar minimal dashboard example:
   - config: `dotconfig/waybar/config.minimal.jsonc`
   - style: `dotconfig/waybar/style.minimal.css`

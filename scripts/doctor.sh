@@ -118,6 +118,11 @@ check_cmd "playerctl" "playerctl" 1
 check_cmd "brightnessctl" "brightnessctl" 1
 check_cmd "pamixer" "pamixer" 1
 check_cmd "nmcli" "NetworkManager" 1
+check_cmd "pactl" "PulseAudio (pactl)" 0
+check_cmd "bluetoothctl" "BlueZ (bluetoothctl)" 0
+check_cmd "fzf" "fzf" 0
+check_cmd "checkupdates" "pacman-contrib (checkupdates)" 0
+check_cmd "hypr-dock" "hypr-dock" 0
 check_cmd "grimblast" "grimblast" 0
 check_cmd "jq" "jq" 0
 check_cmd "sensors" "lm_sensors" 0

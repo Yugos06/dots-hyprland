@@ -7,7 +7,15 @@ if ! command -v eww >/dev/null 2>&1; then
     if command -v notify-send >/dev/null 2>&1; then
         notify-send "Dashboard" "eww n'est pas installe" >/dev/null 2>&1 || true
     fi
+    if [ -x "${HOME}/.config/quickshell/end4-lite/scripts/toggle-left-settings.sh" ]; then
+        "${HOME}/.config/quickshell/end4-lite/scripts/toggle-left-settings.sh" >/dev/null 2>&1 || true
+    fi
     exit 0
+fi
+
+if ! pgrep -x eww >/dev/null 2>&1; then
+    nohup env GDK_SCALE=1 GDK_DPI_SCALE=1 eww daemon --config "${config_dir}" >/dev/null 2>&1 &
+    sleep 0.25
 fi
 
 if eww --config "${config_dir}" active-windows 2>/dev/null | grep -q "dashboard"; then

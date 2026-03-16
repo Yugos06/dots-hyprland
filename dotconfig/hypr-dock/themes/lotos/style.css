@@ -1,0 +1,62 @@
+window {
+  background-color: transparent;
+}
+
+#app {
+  background-color: rgba(24, 25, 38, 0.72);
+  border-radius: 14px;
+  padding: 6px;
+  border: 1px solid rgba(189, 147, 249, 0.45);
+  box-shadow: 0 0 12px rgba(189, 147, 249, 0.35), 0 0 24px rgba(139, 233, 253, 0.18);
+}
+
+button {
+  background-color: rgba(40, 42, 54, 0.55);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(189, 147, 249, 0.35);
+  transition: all .2s ease-out;
+  color: #bd93f9;
+}
+
+button:hover {
+  background-color: rgba(68, 71, 90, 0.55);
+  border-color: rgba(139, 233, 253, 0.65);
+  box-shadow: 0 0 8px rgba(139, 233, 253, 0.35);
+  color: #8be9fd;
+}
+
+button image {
+  -gtk-icon-shadow: 0 0 6px rgba(189, 147, 249, 0.45);
+}
+
+#menu-item {
+  padding: 3px;
+  padding-left: 0;
+}
+
+menu {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-image: none;
+  background-color: rgba(24, 25, 38, 0.92);
+}
+
+menuitem {
+  padding: 3px 6px;
+  color: #f8f8f2;
+}
+
+#pv-item {
+  background-color: rgba(40, 42, 54, 0.8);
+  transition: all .2s ease-out;
+  border-radius: 6px;
+  border: 1px solid rgba(189, 147, 249, 0.35);
+  box-shadow: 0 0 10px rgba(189, 147, 249, 0.2);
+}
+
+#pv-item.hover {
+  background-color: rgba(68, 71, 90, 0.6);
+  border-color: rgba(255, 121, 198, 0.6);
+}

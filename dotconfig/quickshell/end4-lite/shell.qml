@@ -55,10 +55,10 @@ ShellRoot {
             WlrLayershell.namespace: "end4-bottom-dock"
             anchors.bottom: true
             anchors.left: true
-            implicitWidth: bottomDock.hiddenMode ? 0 : bottomDock.implicitWidth
-            implicitHeight: bottomDock.hiddenMode ? 0 : 56
-            margins.left: bottomDock.hiddenMode ? 0 : Math.max(0, Math.round((modelData.width - implicitWidth) / 2))
-            margins.bottom: 4
+            implicitWidth: bottomDock.hiddenMode || !bottomDock.dockEnabled ? 0 : bottomDock.implicitWidth
+            implicitHeight: bottomDock.hiddenMode || !bottomDock.dockEnabled ? 0 : 64
+            margins.left: bottomDock.hiddenMode || !bottomDock.dockEnabled ? 0 : Math.max(0, Math.round((modelData.width - implicitWidth) / 2))
+            margins.bottom: 8
             color: "transparent"
 
             Dock.BottomDock {

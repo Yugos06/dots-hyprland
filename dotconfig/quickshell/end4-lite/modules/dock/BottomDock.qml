@@ -12,8 +12,9 @@ Rectangle {
     property bool hiddenMode: false
     property bool showIcons: true
     property var dynamicEntries: []
+    property bool dockEnabled: true
 
-    readonly property string defaultIcon: "/usr/share/icons/Adwaita/scalable/mimetypes/application-x-executable.svg"
+    readonly property string defaultIcon: "/usr/share/icons/Papirus/24x24/mimetypes/application-x-executable.svg"
     readonly property string iconShow: "/usr/share/icons/Papirus/24x24/actions/view-visible.svg"
     readonly property string iconHide: "/usr/share/icons/Papirus/24x24/actions/view-hidden.svg"
     readonly property string iconAdd: "/usr/share/icons/Papirus/24x24/actions/list-add.svg"
@@ -22,47 +23,54 @@ Rectangle {
     readonly property color safeBorder: palette && palette.border ? palette.border : Qt.rgba(1, 1, 1, 0.22)
     readonly property color safeAccentSoft: palette && palette.accentSoft ? palette.accentSoft : Qt.rgba(1, 1, 1, 0.14)
     readonly property color safeBarText: palette && palette.barText ? palette.barText : Qt.rgba(1, 1, 1, 0.85)
+    readonly property color dockBg: palette && palette.surface ? palette.surface : Qt.rgba(0.08, 0.09, 0.12, 0.86)
+    readonly property color dockBgAlt: palette && palette.surfaceAlt ? palette.surfaceAlt : Qt.rgba(0.12, 0.13, 0.18, 0.9)
+    readonly property color dockGlow: palette && palette.accentSoft ? palette.accentSoft : Qt.rgba(0.78, 0.7, 1, 0.16)
 
     readonly property string customEntriesPath: {
         const u = Qt.resolvedUrl("../../runtime/dock-apps.list").toString();
+        return u.startsWith("file://") ? decodeURIComponent(u.slice(7)) : u;
+    }
+    readonly property string dockDisablePath: {
+        const u = Qt.resolvedUrl("../../runtime/disable-dock").toString();
         return u.startsWith("file://") ? decodeURIComponent(u.slice(7)) : u;
     }
 
     readonly property var coreEntries: [
         {
             label: "Applications",
-            iconFile: "/usr/share/icons/AdwaitaLegacy/24x24/places/start-here.png",
+            iconFile: "/usr/share/icons/Papirus/24x24/actions/homerun.svg",
             command: "$HOME/.config/hypr/scripts/launchers.sh app"
         },
         {
             label: "Terminal",
-            iconFile: "/usr/share/icons/hicolor/scalable/apps/kitty.svg",
+            iconFile: "/usr/share/icons/Papirus/48x48/apps/kitty.svg",
             command: "kitty"
         },
         {
             label: "Navigateur",
-            iconFile: "/usr/share/icons/hicolor/scalable/apps/firefox.svg",
+            iconFile: "/usr/share/icons/Papirus/48x48/apps/firefox.svg",
             command: "firefox"
         },
         {
             label: "Fichiers",
-            iconFile: "/usr/share/icons/Papirus/24x24/apps/thunar.svg",
+            iconFile: "/usr/share/icons/Papirus/48x48/apps/thunar.svg",
             command: "sh -lc 'command -v thunar >/dev/null 2>&1 && exec thunar; command -v nautilus >/dev/null 2>&1 && exec nautilus; exec xdg-open \"$HOME\"'"
         },
         { separator: true },
         {
             label: "Actions",
-            iconFile: "/usr/share/icons/AdwaitaLegacy/24x24/legacy/applications-system.png",
+            iconFile: "/usr/share/icons/Papirus/24x24/actions/system-run.svg",
             command: "$HOME/.config/quickshell/end4-lite/scripts/toggle-launcher.sh"
         },
         {
             label: "Capture",
-            iconFile: "/usr/share/icons/Papirus/24x24/symbolic/apps/accessories-screenshot-symbolic.svg",
+            iconFile: "/usr/share/icons/Papirus/48x48/apps/accessories-screenshot.svg",
             command: "$HOME/.config/hypr/scripts/screenshot.sh area-copy"
         },
         {
             label: "Verrouiller",
-            iconFile: "/usr/share/icons/AdwaitaLegacy/24x24/legacy/system-lock-screen.png",
+            iconFile: "/usr/share/icons/Papirus/24x24/actions/system-lock-screen.svg",
             command: "hyprlock"
         }
     ]
@@ -149,6 +157,10 @@ Rectangle {
         readDockApps.running = true;
     }
 
+    function applyDockToggle(raw) {
+        dockEnabled = (raw || "").trim() !== "1";
+    }
+
     function launch(command) {
         if (!command || command.length === 0) {
             return;
@@ -221,22 +233,45 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: reloadDynamicEntries()
+    property Process readDockToggle: Process {
+        command: ["sh", "-lc", "cat " + dock.dockDisablePath + " 2>/dev/null || true"]
+        stdout: StdioCollector {
+            onStreamFinished: dock.applyDockToggle(text)
+        }
+    }
+
+    Component.onCompleted: {
+        dock.launch("$HOME/.config/quickshell/end4-lite/scripts/dock-apps.sh refresh");
+        reloadDynamicEntries();
+        readDockToggle.running = true;
+    }
+
+    Rectangle {
+        id: dockHalo
+        visible: dock.dockEnabled && !dock.hiddenMode
+        anchors.centerIn: dockFrame
+        width: dockFrame.width + 18
+        height: dockFrame.height + 14
+        radius: dockFrame.radius + 10
+        color: dockGlow
+        opacity: 0.45
+        z: -1
+    }
 
     Rectangle {
         id: dockFrame
-        visible: !dock.hiddenMode
+        visible: dock.dockEnabled && !dock.hiddenMode
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 4
-        width: row.implicitWidth + 14
-        height: 42
-        radius: 13
+        anchors.bottomMargin: 6
+        width: row.implicitWidth + 18
+        height: 52
+        radius: 18
         border.width: 1
-        border.color: Qt.rgba(1, 1, 1, 0.85)
+        border.color: safeBorder
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#141414f2" }
-            GradientStop { position: 1.0; color: "#090909eb" }
+            GradientStop { position: 0.0; color: dockBgAlt }
+            GradientStop { position: 1.0; color: dockBg }
         }
 
         Rectangle {
@@ -251,7 +286,7 @@ Rectangle {
         Row {
             id: row
             anchors.centerIn: parent
-            spacing: 4
+            spacing: 6
 
             Repeater {
                 model: dock.entries
@@ -259,8 +294,8 @@ Rectangle {
                 delegate: Item {
                     readonly property bool isSeparator: modelData.separator === true
                     readonly property bool visualMode: dock.shouldShowVisual(modelData)
-                    width: isSeparator ? 8 : 34
-                    height: 32
+                    width: isSeparator ? 10 : 40
+                    height: 36
 
                     Rectangle {
                         visible: isSeparator
@@ -275,10 +310,10 @@ Rectangle {
                         id: tile
                         visible: !isSeparator
                         anchors.fill: parent
-                        radius: 10
-                        color: mouseArea.containsMouse ? safeAccentSoft : Qt.rgba(1, 1, 1, 0.02)
+                        radius: 12
+                        color: mouseArea.containsMouse ? safeAccentSoft : Qt.rgba(1, 1, 1, 0.04)
                         border.width: mouseArea.containsMouse ? 1 : 0
-                        border.color: Qt.rgba(1, 1, 1, 0.78)
+                        border.color: safeBorder
                         scale: mouseArea.pressed ? 0.94 : (mouseArea.containsMouse ? 1.05 : 1.0)
 
                         Behavior on scale {
@@ -291,10 +326,10 @@ Rectangle {
                         Image {
                             id: icon
                             anchors.centerIn: parent
-                            width: 18
-                            height: 18
-                            sourceSize.width: 18
-                            sourceSize.height: 18
+                            width: 20
+                            height: 20
+                            sourceSize.width: 20
+                            sourceSize.height: 20
                             source: dock.iconSource(modelData)
                             fillMode: Image.PreserveAspectFit
                             smooth: true
@@ -303,10 +338,10 @@ Rectangle {
 
                         Image {
                             anchors.centerIn: parent
-                            width: 16
-                            height: 16
-                            sourceSize.width: 16
-                            sourceSize.height: 16
+                            width: 18
+                            height: 18
+                            sourceSize.width: 18
+                            sourceSize.height: 18
                             source: dock.defaultIcon
                             fillMode: Image.PreserveAspectFit
                             smooth: true
@@ -315,8 +350,8 @@ Rectangle {
 
                         Rectangle {
                             anchors.centerIn: parent
-                            width: 6
-                            height: 6
+                            width: 7
+                            height: 7
                             radius: 99
                             color: Qt.alpha(safeBarText, 0.5)
                             visible: !visualMode
@@ -345,5 +380,5 @@ Rectangle {
         }
     }
 
-    visible: !dock.hiddenMode
+    visible: dock.dockEnabled && !dock.hiddenMode
 }

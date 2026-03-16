@@ -77,8 +77,8 @@ case "${MODE}" in
         ;;
 esac
 
-SRC_ITEMS="hypr waybar wofi mako quickshell themes wallpapers eww"
-TOTAL_STEPS=5
+SRC_ITEMS="hypr waybar wofi mako quickshell themes wallpapers eww hypr-dock nwg-dock-hyprland"
+TOTAL_STEPS=6
 STEP=1
 
 step() {
@@ -176,6 +176,24 @@ done
 chmod +x "${CFG_DIR}/hypr/scripts/"*.sh
 chmod +x "${CFG_DIR}/quickshell/end4-lite/scripts/"*.sh
 chmod +x "${CFG_DIR}/eww/scripts/"*.sh
+if [ -d "${CFG_DIR}/waybar/scripts" ]; then
+    chmod +x "${CFG_DIR}/waybar/scripts/"*
+fi
+if [ -f "${CFG_DIR}/nwg-dock-hyprland/launch.sh" ]; then
+    chmod +x "${CFG_DIR}/nwg-dock-hyprland/launch.sh"
+fi
+
+step "Reloading Hyprland (if running)"
+if command -v hyprctl >/dev/null 2>&1; then
+    if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl reload >/dev/null 2>&1 || true
+        ok "Hyprland reloaded"
+    else
+        info "Hyprland not running; skip reload"
+    fi
+else
+    info "hyprctl not found; skip reload"
+fi
 
 log ""
 log "${C_BOLD}${C_GREEN}Installation complete${C_RESET}"

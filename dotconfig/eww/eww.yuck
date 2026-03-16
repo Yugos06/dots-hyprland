@@ -78,6 +78,12 @@
         (label :class "tab-title" :text "Weather")
       )
     )
+    (eventbox :onclick "~/.config/eww/scripts/set-tab.sh ai" :vexpand false :valign "start"
+      (box :class {active_tab == "ai" ? "tab-chip active" : "tab-chip"} :spacing 6 :vexpand false :valign "center"
+        (label :class "tab-icon" :text "󰘦")
+        (label :class "tab-title" :text "IA")
+      )
+    )
   )
 )
 
@@ -278,6 +284,25 @@
   )
 )
 
+(defwidget ai-page []
+  (box :class "page ai-page" :orientation "v" :spacing 12 :halign "fill" :valign "start"
+    (box :class "glass-card ai-hero" :orientation "v" :spacing 6
+      (label :class "ai-title" :text "IA")
+      (label :class "ai-sub" :text "Espace pour outils et raccourcis IA.")
+    )
+    (box :spacing 12
+      (box :class "glass-card ai-card" :orientation "v" :spacing 6
+        (label :class "perf-title" :text "Raccourcis")
+        (label :class "system-line" :text "Ajoute tes commandes IA ici.")
+      )
+      (box :class "glass-card ai-card" :orientation "v" :spacing 6
+        (label :class "perf-title" :text "Notes")
+        (label :class "system-line" :text "Placeholders pour futures integrations.")
+      )
+    )
+  )
+)
+
 (defwidget tab-pages []
   (box :class "tab-pages"
        :orientation "v"
@@ -296,6 +321,9 @@
     )
     (box :visible {active_tab == "weather"} :halign "fill" :valign "start"
       (weather-page)
+    )
+    (box :visible {active_tab == "ai"} :halign "fill" :valign "start"
+      (ai-page)
     )
   )
 )
