@@ -38,64 +38,14 @@ app_label() {
 
 app_icon_candidates() {
     case "$1" in
-        brave) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/brave-browser.svg;/usr/share/icons/Papirus/48x48/apps/brave-browser.svg;/usr/share/icons/Papirus/24x24/apps/brave-browser.svg;/usr/share/icons/hicolor/scalable/apps/brave-browser.svg;/usr/share/icons/hicolor/256x256/apps/brave-browser.png;/usr/share/icons/hicolor/128x128/apps/brave-browser.png" ;;
-        discord) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/discord.svg;/usr/share/icons/Papirus/48x48/apps/discord.svg;/usr/share/icons/Papirus/24x24/apps/discord.svg;/usr/share/icons/hicolor/scalable/apps/discord.svg;/usr/share/icons/hicolor/256x256/apps/discord.png;/usr/share/icons/hicolor/128x128/apps/discord.png" ;;
-        spotify) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/spotify-client.svg;/usr/share/icons/Papirus/48x48/apps/spotify-client.svg;/usr/share/icons/Papirus/24x24/apps/spotify-client.svg;/usr/share/icons/hicolor/scalable/apps/spotify-client.svg;/usr/share/icons/hicolor/256x256/apps/spotify-client.png;/usr/share/icons/hicolor/128x128/apps/spotify-client.png" ;;
-        steam) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/steam.svg;/usr/share/icons/Papirus/48x48/apps/steam.svg;/usr/share/icons/Papirus/24x24/apps/steam.svg;/usr/share/icons/hicolor/scalable/apps/steam.svg;/usr/share/icons/hicolor/256x256/apps/steam.png;/usr/share/icons/hicolor/128x128/apps/steam.png" ;;
-        code) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/code.svg;/usr/share/icons/Papirus/48x48/apps/code.svg;/usr/share/icons/Papirus/24x24/apps/code.svg;/usr/share/icons/hicolor/scalable/apps/code.svg;/usr/share/icons/hicolor/scalable/apps/com.visualstudio.code.oss.svg;/usr/share/icons/hicolor/256x256/apps/code.png;/usr/share/icons/hicolor/256x256/apps/com.visualstudio.code.oss.png" ;;
-        telegram) printf "%s\n" "/usr/share/icons/Papirus/64x64/apps/telegram.svg;/usr/share/icons/Papirus/48x48/apps/telegram.svg;/usr/share/icons/Papirus/24x24/apps/telegram.svg;/usr/share/icons/hicolor/scalable/apps/telegram.svg;/usr/share/icons/hicolor/scalable/apps/telegram-desktop.svg;/usr/share/icons/hicolor/256x256/apps/telegram.png;/usr/share/icons/hicolor/256x256/apps/telegram-desktop.png" ;;
+        brave) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/brave-browser.svg;/usr/share/icons/hicolor/256x256/apps/brave-browser.png;/usr/share/icons/Papirus/24x24/apps/brave-browser.svg" ;;
+        discord) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/discord.svg;/usr/share/icons/hicolor/256x256/apps/discord.png;/usr/share/icons/Papirus/24x24/apps/discord.svg" ;;
+        spotify) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/spotify-client.svg;/usr/share/icons/hicolor/256x256/apps/spotify-client.png;/usr/share/icons/Papirus/24x24/apps/spotify-client.svg" ;;
+        steam) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/steam.svg;/usr/share/icons/hicolor/256x256/apps/steam.png;/usr/share/icons/Papirus/24x24/apps/steam.svg" ;;
+        code) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/code.svg;/usr/share/icons/hicolor/256x256/apps/code.png;/usr/share/icons/Papirus/24x24/apps/code.svg" ;;
+        telegram) printf "%s\n" "/usr/share/icons/hicolor/scalable/apps/telegram.svg;/usr/share/icons/hicolor/256x256/apps/telegram.png;/usr/share/icons/Papirus/24x24/apps/telegram.svg" ;;
         *) return 1 ;;
     esac
-}
-
-app_icon_names() {
-    case "$1" in
-        brave) printf "%s\n" "brave-browser brave" ;;
-        discord) printf "%s\n" "discord discord-canary com.discordapp.Discord" ;;
-        spotify) printf "%s\n" "spotify spotify-client" ;;
-        steam) printf "%s\n" "steam steam-native com.valvesoftware.Steam" ;;
-        code) printf "%s\n" "code code-oss com.visualstudio.code com.visualstudio.code.oss visual-studio-code" ;;
-        telegram) printf "%s\n" "telegram telegram-desktop org.telegram.desktop" ;;
-        *) return 1 ;;
-    esac
-}
-
-find_icon() {
-    icon_name="$1"
-    icon_bases="${HOME}/.local/share/icons /var/lib/flatpak/exports/share/icons /usr/share/icons"
-    icon_rel_dirs="Papirus/64x64/apps Papirus/48x48/apps Papirus/32x32/apps Papirus/24x24/apps hicolor/scalable/apps hicolor/256x256/apps hicolor/128x128/apps hicolor/64x64/apps hicolor/48x48/apps hicolor/32x32/apps hicolor/24x24/apps"
-
-    for base in ${icon_bases}; do
-        for rel in ${icon_rel_dirs}; do
-            for ext in svg png; do
-                candidate="${base}/${rel}/${icon_name}.${ext}"
-                if [ -f "${candidate}" ]; then
-                    printf "%s\n" "${candidate}"
-                    return 0
-                fi
-            done
-        done
-    done
-    return 1
-}
-
-find_symbolic_icon() {
-    icon_name="$1"
-    icon_bases="${HOME}/.local/share/icons /var/lib/flatpak/exports/share/icons /usr/share/icons"
-    icon_rel_dirs="hicolor/symbolic/apps Papirus/symbolic/apps"
-
-    for base in ${icon_bases}; do
-        for rel in ${icon_rel_dirs}; do
-            for ext in svg png; do
-                candidate="${base}/${rel}/${icon_name}-symbolic.${ext}"
-                if [ -f "${candidate}" ]; then
-                    printf "%s\n" "${candidate}"
-                    return 0
-                fi
-            done
-        done
-    done
-    return 1
 }
 
 app_command() {
@@ -126,43 +76,23 @@ app_command() {
 
 pick_icon() {
     icon_candidates="$1"
-    icon_names="${2:-}"
     old_ifs="${IFS}"
     IFS=";"
     for candidate in ${icon_candidates}; do
-        case "${candidate}" in
-            *symbolic*) continue ;;
-        esac
         if [ -f "${candidate}" ]; then
             IFS="${old_ifs}"
             printf "%s\n" "${candidate}"
-            return 0
+            return 0x
         fi
     done
     IFS="${old_ifs}"
-
-    if [ -n "${icon_names}" ]; then
-        for icon_name in ${icon_names}; do
-            if icon_path="$(find_icon "${icon_name}")"; then
-                printf "%s\n" "${icon_path}"
-                return 0
-            fi
-        done
-        for icon_name in ${icon_names}; do
-            if icon_path="$(find_symbolic_icon "${icon_name}")"; then
-                printf "%s\n" "${icon_path}"
-                return 0
-            fi
-        done
-    fi
-
-    printf "%s\n" "/usr/share/icons/Papirus/24x24/mimetypes/application-x-executable.svg"
+    printf "%s\n" "/usr/share/icons/Adwaita/scalable/mimetypes/application-x-executable.svg"
 }
 
 write_entry() {
     app_id="$1"
     label="$(app_label "${app_id}")"
-    icon="$(pick_icon "$(app_icon_candidates "${app_id}")" "$(app_icon_names "${app_id}")")"
+    icon="$(pick_icon "$(app_icon_candidates "${app_id}")")"
     command="$(app_command "${app_id}")"
     printf "%s|%s|%s|%s\n" "${app_id}" "${label}" "${icon}" "${command}" >> "${apps_file}"
 }
@@ -246,36 +176,6 @@ choose_remove() {
     remove_app "${picked_id}"
 }
 
-refresh_icons() {
-    tmp_file="$(mktemp)"
-    trap 'rm -f "${tmp_file}"' EXIT HUP INT TERM
-
-    while IFS= read -r line; do
-        case "${line}" in
-            ""|\#*) printf "%s\n" "${line}" >> "${tmp_file}"; continue ;;
-            *"|"*"|"*"|"*) ;;
-            *) printf "%s\n" "${line}" >> "${tmp_file}"; continue ;;
-        esac
-
-        app_id="${line%%|*}"
-        rest="${line#*|}"
-        label="${rest%%|*}"
-        rest="${rest#*|}"
-        icon="${rest%%|*}"
-        command="${rest#*|}"
-
-        if app_icon_candidates "${app_id}" >/dev/null 2>&1; then
-            icon="$(pick_icon "$(app_icon_candidates "${app_id}")" "$(app_icon_names "${app_id}")")"
-            printf "%s|%s|%s|%s\n" "${app_id}" "${label}" "${icon}" "${command}" >> "${tmp_file}"
-        else
-            printf "%s\n" "${line}" >> "${tmp_file}"
-        fi
-    done < "${apps_file}"
-
-    mv "${tmp_file}" "${apps_file}"
-    trap - EXIT HUP INT TERM
-}
-
 case "${mode}" in
     add)
         if [ -n "${target_id}" ]; then
@@ -295,9 +195,6 @@ case "${mode}" in
         if [ -s "${apps_file}" ]; then
             cat "${apps_file}"
         fi
-        ;;
-    refresh)
-        refresh_icons
         ;;
     clear)
         : > "${apps_file}"
