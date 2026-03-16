@@ -7,12 +7,16 @@ style="style.css"
 cd "${cfg_dir}"
 
 exec nwg-dock-hyprland \
-  -r \
+  -d \
+  -hd 0 \
+  -hl overlay \
   -p bottom \
-  -i 40 \
+  -i 28 \
   -a center \
-  -mb 6 \
-  -ml 6 \
-  -mr 6 \
+  -mb 3 \
+  -ml 3 \
+  -mr 3 \
   -mt 0 \
+  -c "sh -lc '${HOME}/.config/hypr/scripts/launchers.sh app'" \
+  -ico "/usr/share/icons/Papirus/24x24/actions/view-grid.svg" \
   -s "${style}"

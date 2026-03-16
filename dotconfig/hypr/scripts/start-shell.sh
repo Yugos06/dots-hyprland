@@ -62,7 +62,9 @@ if [ "${use_nwg_dock}" -eq 1 ]; then
             "${HOME}/.config/nwg-dock-hyprland/launch.sh" >/dev/null 2>&1 &
     else
         nohup env GTK_ICON_THEME=Papirus XDG_ICON_THEME=Papirus \
-            nwg-dock-hyprland -r -p bottom -i 40 -a center -mb 6 -ml 6 -mr 6 -mt 0 \
+            nwg-dock-hyprland -d -hd 0 -hl overlay -p bottom -i 28 -a center -mb 3 -ml 3 -mr 3 -mt 0 \
+            -c "sh -lc '${HOME}/.config/hypr/scripts/launchers.sh app'" \
+            -ico "/usr/share/icons/Papirus/24x24/actions/view-grid.svg" \
             -s "style.css" >/dev/null 2>&1 &
     fi
 
