@@ -182,6 +182,12 @@ fi
 if [ -f "${CFG_DIR}/nwg-dock-hyprland/launch.sh" ]; then
     chmod +x "${CFG_DIR}/nwg-dock-hyprland/launch.sh"
 fi
+if [ -f "${CFG_DIR}/nwg-dock-hyprland/apply-icon-overrides.sh" ]; then
+    chmod +x "${CFG_DIR}/nwg-dock-hyprland/apply-icon-overrides.sh"
+fi
+if [ -f "${CFG_DIR}/nwg-dock-hyprland/add-to-dock.sh" ]; then
+    chmod +x "${CFG_DIR}/nwg-dock-hyprland/add-to-dock.sh"
+fi
 
 step "Reloading Hyprland (if running)"
 if command -v hyprctl >/dev/null 2>&1; then

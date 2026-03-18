@@ -17,6 +17,6 @@ exec nwg-dock-hyprland \
   -ml 3 \
   -mr 3 \
   -mt 0 \
-  -c "sh -lc '${HOME}/.config/hypr/scripts/launchers.sh app'" \
-  -ico "/usr/share/icons/Papirus/24x24/actions/view-grid.svg" \
+  -c "${HOME}/.config/nwg-dock-hyprland/add-to-dock.sh" \
+  -ico "/usr/share/icons/Papirus/24x24/actions/list-add.svg" \
   -s "${style}"

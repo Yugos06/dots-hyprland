@@ -13,35 +13,59 @@ window {
 
 #dock,
 .dock,
-box {
-  background-color: rgba(16, 18, 28, 0.32);
-  border: 1px solid rgba(189, 147, 249, 0.35);
-  border-radius: 18px;
-  padding: 1px 6px;
-  box-shadow: 0 0 10px rgba(189, 147, 249, 0.2), 0 0 16px rgba(139, 233, 253, 0.12);
+#box {
+  background-color: rgba(20, 22, 34, 0.28);
+  background-image: linear-gradient(
+    180deg,
+    rgba(96, 100, 140, 0.18),
+    rgba(12, 14, 22, 0.12)
+  );
+  border: 1px solid rgba(189, 147, 249, 0.28);
+  border-radius: 22px;
+  padding: 3px 10px;
+  box-shadow:
+    0 0 18px rgba(189, 147, 249, 0.22),
+    0 0 32px rgba(139, 233, 253, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 10px rgba(189, 147, 249, 0.18),
+    0 0 18px rgba(139, 233, 253, 0.08);
 }
 
 button {
-  background-color: transparent;
+  background-color: rgba(28, 30, 44, 0.12);
   border: 1px solid transparent;
-  border-radius: 12px;
-  margin: 1px;
-  padding: 1px;
+  border-radius: 10px;
+  margin: 2px;
+  padding: 2px;
   transition: all 120ms ease-out;
 }
 
 button:hover {
-  background-color: rgba(62, 66, 92, 0.35);
-  border-color: rgba(139, 233, 253, 0.4);
-  box-shadow: 0 0 6px rgba(139, 233, 253, 0.22);
+  background-color: rgba(90, 96, 130, 0.24);
+  border-color: rgba(139, 233, 253, 0.35);
+  box-shadow: 0 0 6px rgba(139, 233, 253, 0.16);
 }
 
 button:checked,
 button.active {
   background-color: rgba(189, 147, 249, 0.14);
-  border-color: rgba(189, 147, 249, 0.6);
+  border-color: rgba(189, 147, 249, 0.5);
+  box-shadow: 0 0 6px rgba(189, 147, 249, 0.22);
+}
+
+#active {
+  border: none;
 }
 
 image {
-  -gtk-icon-shadow: 0 0 6px rgba(189, 147, 249, 0.4);
+  -gtk-icon-shadow: 0 0 8px rgba(189, 147, 249, 0.5);
+}
+
+button:hover image {
+  -gtk-icon-shadow: 0 0 12px rgba(139, 233, 253, 0.55);
+}
+
+button:checked image,
+button.active image {
+  -gtk-icon-shadow: 0 0 12px rgba(189, 147, 249, 0.6);
 }

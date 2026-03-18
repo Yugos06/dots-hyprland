@@ -57,14 +57,18 @@ if [ "${use_nwg_dock}" -eq 1 ]; then
     pkill hypr-dock >/dev/null 2>&1 || true
     pkill -f nwg-dock-hyprland >/dev/null 2>&1 || true
 
+    if [ -x "${HOME}/.config/nwg-dock-hyprland/apply-icon-overrides.sh" ]; then
+        "${HOME}/.config/nwg-dock-hyprland/apply-icon-overrides.sh" >/dev/null 2>&1 || true
+    fi
+
     if [ -x "${HOME}/.config/nwg-dock-hyprland/launch.sh" ]; then
         nohup env GTK_ICON_THEME=Papirus XDG_ICON_THEME=Papirus \
             "${HOME}/.config/nwg-dock-hyprland/launch.sh" >/dev/null 2>&1 &
     else
         nohup env GTK_ICON_THEME=Papirus XDG_ICON_THEME=Papirus \
             nwg-dock-hyprland -d -hd 0 -hl overlay -p bottom -i 28 -a center -mb 3 -ml 3 -mr 3 -mt 0 \
-            -c "sh -lc '${HOME}/.config/hypr/scripts/launchers.sh app'" \
-            -ico "/usr/share/icons/Papirus/24x24/actions/view-grid.svg" \
+            -c "${HOME}/.config/nwg-dock-hyprland/add-to-dock.sh" \
+            -ico "/usr/share/icons/Papirus/24x24/actions/list-add.svg" \
             -s "style.css" >/dev/null 2>&1 &
     fi
 
